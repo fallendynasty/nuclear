@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://b1d48jr23q0of"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_npu4o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7huhl"]
+albedo_color = Color(0.221299, 0.117743, 0.0611403, 1)
+metallic = 0.64
+metallic_specular = 0.65
+roughness = 0.35
+
+[sub_resource type="BoxMesh" id="BoxMesh_sn7x6"]
+
+[node name="Gun" type="Node3D"]
+
+[node name="GunGrip" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.163377, 0, 0, 0, 0.249218, 0, 0, 0, 0.184827, -0.00785565, -0.186422, -0.0256111)
+layers = 2
+mesh = SubResource("CapsuleMesh_npu4o")
+surface_material_override/0 = SubResource("StandardMaterial3D_7huhl")
+
+[node name="GunBarrel" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.84897, 0.00785581, 0, -0.347083)
+layers = 2
+mesh = SubResource("BoxMesh_sn7x6")
+skeleton = NodePath("../../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_7huhl")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, -1)

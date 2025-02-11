@@ -43,6 +43,8 @@ extends CharacterBody3D
 @export var input_sprint : String = "sprint"
 ## Name of Input Action to toggle freefly mode.
 @export var input_freefly : String = "freefly"
+## Name of Input Action to shoot
+@export var input_shoot: String = "shoot"
 
 var mouse_captured : bool = false
 var look_rotation : Vector2
@@ -52,6 +54,9 @@ var freeflying : bool = false
 ## IMPORTANT REFERENCES
 @onready var head: Node3D = $Head
 @onready var collider: CollisionShape3D = $Collider
+@onready var gun_barrel_raycast: RayCast3D = $Head/Camera3D/Gun/RayCast3D
+var bullet = load("res://bullet.tscn")
+var bullet_instance
 
 func _ready() -> void:
 	check_input_mappings()
@@ -114,6 +119,13 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = 0
 		velocity.y = 0
+	
+	# Shooting
+	if Input.is_action_pressed("shoot"):
+		bullet_instance = bullet.instantiate()
+		bullet_instance.position = gun_barrel_raycast.global_position
+		bullet_instance.transform.basis = gun_barrel_raycast.global_transform.basis
+		get_parent().add_child(bullet_instance)  # get_parent() should return the map
 	
 	# Use velocity to actually move
 	move_and_slide()
