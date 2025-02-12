@@ -5,63 +5,51 @@
 
 extends CharacterBody3D
 
-## Can we move around?
-@export var can_move : bool = true
-## Are we affected by gravity?
-@export var has_gravity : bool = true
-## Can we press to jump?
-@export var can_jump : bool = true
-## Can we hold to run?
-@export var can_sprint : bool = false
-## Can we press to enter freefly mode (noclip)?
-@export var can_freefly : bool = false
+@export_group("Character functions")
+@export var can_move : bool = true ## Can we move around?
+@export var has_gravity : bool = true ## Are we affected by gravity?
+@export var can_jump : bool = true ## Can we press to jump?
+@export var can_sprint : bool = false ## Can we hold to run?
+@export var can_freefly : bool = false ## Can we enter freefly mode (noclip)?
+@export var can_shoot: bool = true ## Can we shoot
 
 @export_group("Speeds")
-## Look around rotation speed.
-@export var look_speed : float = 0.005
-## Normal speed.
-@export var base_speed : float = 7.0
-## Speed of jump.
-@export var jump_velocity : float = 4.5
-## How fast do we run?
-@export var sprint_speed : float = 20.0
-## How fast do we freefly?
-@export var freefly_speed : float = 25.0
+@export var look_speed : float = 0.005 ## Look around rotation speed.
+@export var base_speed : float = 7.0 ## Normal speed.
+@export var jump_velocity : float = 4.5 ## Speed of jump.
+@export var sprint_speed : float = 20.0 ## How fast do we run?
+@export var freefly_speed : float = 25.0 ## How fast do we freefly?
 
 @export_group("Input Actions")
-## Name of Input Action to move Left.
-@export var input_left : String = "ui_left"
-## Name of Input Action to move Right.
-@export var input_right : String = "ui_right"
-## Name of Input Action to move Forward.
-@export var input_forward : String = "ui_up"
-## Name of Input Action to move Backward.
-@export var input_back : String = "ui_down"
-## Name of Input Action to Jump.
-@export var input_jump : String = "ui_accept"
-## Name of Input Action to Sprint.
-@export var input_sprint : String = "sprint"
-## Name of Input Action to toggle freefly mode.
-@export var input_freefly : String = "freefly"
-## Name of Input Action to shoot
-@export var input_shoot: String = "shoot"
-
-var mouse_captured : bool = false
-var look_rotation : Vector2
-var move_speed : float = 0.0
-var freeflying : bool = false
+@export var input_left : String = "ui_left" ## Name of Input Action to move Left.
+@export var input_right : String = "ui_right" ## Name of Input Action to move Right.
+@export var input_forward : String = "ui_up" ## Name of Input Action to move Forward.
+@export var input_back : String = "ui_down" ## Name of Input Action to move Backward.
+@export var input_jump : String = "ui_accept" ## Name of Input Action to Jump.
+@export var input_sprint : String = "sprint" ## Name of Input Action to Sprint.
+@export var input_freefly : String = "freefly" ## Name of Input Action to toggle freefly mode.
+@export var input_shoot: String = "shoot" ## Name of Input Action to shoot
 
 ## IMPORTANT REFERENCES
 @onready var head: Node3D = $Head
 @onready var collider: CollisionShape3D = $Collider
 @onready var gun_barrel_raycast: RayCast3D = $Head/Camera3D/Gun/RayCast3D
-var bullet = load("res://bullet.tscn")
+@onready var healthbar = $Head/Camera3D/HealthBar
+var mouse_captured : bool = false
+var look_rotation : Vector2
+var move_speed : float = 0.0
+var freeflying : bool = false
+var bullet = load("res://guns/bullet.tscn")
 var bullet_instance
+var health = 100
+
 
 func _ready() -> void:
+	add_to_group("player") #adds proto_controller to group player
 	check_input_mappings()
 	look_rotation.y = rotation.y
 	look_rotation.x = head.rotation.x
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Mouse capturing
@@ -121,7 +109,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y = 0
 	
 	# Shooting
-	if Input.is_action_pressed("shoot"):
+	if can_shoot and Input.is_action_pressed("shoot"):
 		bullet_instance = bullet.instantiate()
 		bullet_instance.position = gun_barrel_raycast.global_position
 		bullet_instance.transform.basis = gun_barrel_raycast.global_transform.basis #get new matrix basis based on orientation of barrel
@@ -129,7 +117,6 @@ func _physics_process(delta: float) -> void:
 	
 	# Use velocity to actually move
 	move_and_slide()
-
 
 ## Rotate us to look around.
 ## Base of controller rotates around y (left/right). Head rotates around x (up/down).
@@ -143,7 +130,6 @@ func rotate_look(rot_input : Vector2):
 	head.transform.basis = Basis()
 	head.rotate_x(look_rotation.x)
 
-
 func enable_freefly():
 	collider.disabled = true
 	freeflying = true
@@ -153,16 +139,13 @@ func disable_freefly():
 	collider.disabled = false
 	freeflying = false
 
-
 func capture_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	mouse_captured = true
 
-
 func release_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	mouse_captured = false
-
 
 ## Checks if some Input Actions haven't been created.
 ## Disables functionality accordingly.
@@ -188,3 +171,19 @@ func check_input_mappings():
 	if can_freefly and not InputMap.has_action(input_freefly):
 		push_error("Freefly disabled. No InputAction found for input_freefly: " + input_freefly)
 		can_freefly = false
+	if can_shoot and not InputMap.has_action(input_shoot):
+		push_error("Shoot disabled. No InputAction found for input_shoot: " + input_shoot)
+		can_shoot = false
+		
+func hurt(damage):
+	if damage < health:
+		health -= damage
+		healthbar.value = health
+	else:
+		healthbar.value = 0
+		print('U R dead')
+		# remove the player's mobility when it's dead
+		can_move = false ## Can we move around?
+		can_jump = false ## Can we press to jump?
+		can_shoot = false ## Can we shoot
+		velocity = Vector3(0,0,0)

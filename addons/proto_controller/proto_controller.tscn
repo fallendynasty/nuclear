@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://bs72ogkvdd7d6"]
+[gd_scene load_steps=8 format=3 uid="uid://bs72ogkvdd7d6"]
 
 [ext_resource type="Script" path="res://addons/proto_controller/proto_controller.gd" id="1_ucva2"]
-[ext_resource type="PackedScene" uid="uid://b1d48jr23q0of" path="res://gun.tscn" id="2_xg74u"]
+[ext_resource type="PackedScene" uid="uid://b1d48jr23q0of" path="res://guns/gun.tscn" id="2_xg74u"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iof21"]
 albedo_color = Color(0.91806, 0.575202, 0.222449, 1)
@@ -13,6 +13,10 @@ height = 1.8
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iof21"]
 radius = 0.4
 height = 1.8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3md8g"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4x1q"]
 
 [node name="ProtoController" type="CharacterBody3D"]
 script = ExtResource("1_ucva2")
@@ -35,3 +39,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 
 [node name="Gun" parent="Head/Camera3D" instance=ExtResource("2_xg74u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.699088, -0.340358, -0.732374)
+
+[node name="HealthBar" type="ProgressBar" parent="Head/Camera3D"]
+offset_right = 344.0
+offset_bottom = 27.0
+theme_override_styles/background = SubResource("StyleBoxFlat_3md8g")
+theme_override_styles/fill = SubResource("StyleBoxFlat_g4x1q")
+value = 100.0
