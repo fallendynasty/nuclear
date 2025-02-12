@@ -24,7 +24,7 @@ func _process(delta: float) -> void:
 		#remove when tiny
 		if mesh.scale.length() < 1.5: # just the length formula
 			get_parent().remove_child(self)
-			mesh.queue_free() # remove the mesh when it's nearly gone
+			self.queue_free() # remove the bullet node when it's nearly gone
 			
 
 			
