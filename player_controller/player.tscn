@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://bpj8ln6w4yv72"]
+[gd_scene load_steps=10 format=3 uid="uid://bpj8ln6w4yv72"]
 
+[ext_resource type="Script" path="res://player_controller/scripts/player.gd" id="1_njpdr"]
 [ext_resource type="Script" path="res://player_controller/scripts/state_machine.gd" id="1_qshaj"]
 [ext_resource type="Script" path="res://player_controller/scripts/states/idle_state.gd" id="2_rtyuo"]
 [ext_resource type="Script" path="res://player_controller/scripts/states/running_state.gd" id="3_hwf20"]
@@ -15,6 +16,7 @@ albedo_color = Color(0.962597, 0.387652, 0, 1)
 material = SubResource("StandardMaterial3D_w8wml")
 
 [node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_njpdr")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

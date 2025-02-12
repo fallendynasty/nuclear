@@ -1,6 +1,8 @@
 ## Virtual base class State for all player states
 class_name State extends Node
 
+var player: Player
+
 ## Emitted when the state finishes and wants to transition to another state.
 signal finished(next_state_path: String, data: Dictionary)
 
