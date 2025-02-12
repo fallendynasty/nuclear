@@ -124,7 +124,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("shoot"):
 		bullet_instance = bullet.instantiate()
 		bullet_instance.position = gun_barrel_raycast.global_position
-		bullet_instance.transform.basis = gun_barrel_raycast.global_transform.basis
+		bullet_instance.transform.basis = gun_barrel_raycast.global_transform.basis #get new matrix basis based on orientation of barrel
 		get_parent().add_child(bullet_instance)  # get_parent() should return the map
 	
 	# Use velocity to actually move
