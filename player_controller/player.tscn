@@ -1,0 +1,46 @@
+[gd_scene load_steps=10 format=3 uid="uid://bpj8ln6w4yv72"]
+
+[ext_resource type="Script" path="res://player_controller/scripts/player.gd" id="1_njpdr"]
+[ext_resource type="Script" path="res://player_controller/scripts/state_machine.gd" id="1_qshaj"]
+[ext_resource type="Script" path="res://player_controller/scripts/states/idle_state.gd" id="2_rtyuo"]
+[ext_resource type="Script" path="res://player_controller/scripts/states/running_state.gd" id="3_hwf20"]
+[ext_resource type="Script" path="res://player_controller/scripts/states/jumping_state.gd" id="4_3bpqg"]
+[ext_resource type="Script" path="res://player_controller/scripts/states/falling_state.gd" id="5_cygei"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lryno"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w8wml"]
+albedo_color = Color(0.962597, 0.387652, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_qljoe"]
+material = SubResource("StandardMaterial3D_w8wml")
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_njpdr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_lryno")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("CapsuleMesh_qljoe")
+
+[node name="CameraController" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraController"]
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("1_qshaj")
+
+[node name="IdleState" type="Node" parent="StateMachine"]
+script = ExtResource("2_rtyuo")
+
+[node name="RunningState" type="Node" parent="StateMachine"]
+script = ExtResource("3_hwf20")
+
+[node name="JumpingState" type="Node" parent="StateMachine"]
+script = ExtResource("4_3bpqg")
+
+[node name="FallingState" type="Node" parent="StateMachine"]
+script = ExtResource("5_cygei")
