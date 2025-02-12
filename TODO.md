@@ -1,0 +1,12 @@
+# TODO
+- [x] implement player states & state machine
+- [ ] improve / add more movement options (e.g. sliding, wall jumping, etc.)
+- [ ] re-implement shooting
+  - [ ] add shooting script e.g. `guns/gun.gd`
+    - add shooting logic in `_ready()` or `_physics_process()`, etc.
+  - [ ] add `guns/gun.tscn` node to `player_controller/player.tscn` node
+  - [ ] attach script `guns/gun.gd` to gun
+- [ ] re-implement health bar (and damaging spike?) in new player script `player_controller/scripts/player.gd`
+- [ ] (?) items, equipping / picking up items, etc.
+- [ ] procedural generation
+- [ ] enemies
