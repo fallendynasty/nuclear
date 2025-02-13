@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://bpj8ln6w4yv72"]
+[gd_scene load_steps=13 format=3 uid="uid://bpj8ln6w4yv72"]
 
 [ext_resource type="Script" path="res://player_controller/scripts/player.gd" id="1_njpdr"]
 [ext_resource type="Script" path="res://player_controller/scripts/state_machine.gd" id="1_qshaj"]
+[ext_resource type="PackedScene" uid="uid://b1d48jr23q0of" path="res://guns/gun.tscn" id="2_gdwc4"]
 [ext_resource type="Script" path="res://player_controller/scripts/states/idle_state.gd" id="2_rtyuo"]
 [ext_resource type="Script" path="res://player_controller/scripts/states/running_state.gd" id="3_hwf20"]
 [ext_resource type="Script" path="res://player_controller/scripts/states/jumping_state.gd" id="4_3bpqg"]
@@ -15,8 +16,13 @@ albedo_color = Color(0.962597, 0.387652, 0, 1)
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qljoe"]
 material = SubResource("StandardMaterial3D_w8wml")
 
-[node name="Player" type="CharacterBody3D"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3l7j0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_idcgq"]
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER")]
 script = ExtResource("1_njpdr")
+CAMERA_CONTROLLER = NodePath("CameraController/Camera3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -30,8 +36,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraController"]
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="HealthBar" type="ProgressBar" parent="CameraController/Camera3D"]
+offset_right = 344.0
+offset_bottom = 27.0
+theme_override_styles/background = SubResource("StyleBoxFlat_3l7j0")
+theme_override_styles/fill = SubResource("StyleBoxFlat_idcgq")
+value = 100.0
+
+[node name="Gun" parent="CameraController/Camera3D" instance=ExtResource("2_gdwc4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.699088, -0.340358, -0.732374)
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "player")]
 script = ExtResource("1_qshaj")
+initial_state = NodePath("IdleState")
+player = NodePath("..")
 
 [node name="IdleState" type="Node" parent="StateMachine"]
 script = ExtResource("2_rtyuo")
