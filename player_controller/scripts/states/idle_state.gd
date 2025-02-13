@@ -11,21 +11,14 @@ func update(_delta: float) -> void:
 ## Called by the state machine on the engine's physics update tick.
 func physics_update(_delta: float) -> void:
 	# NOTE: since we are on the floor, we can ignore gravity
-	if not player.is_on_floor():
-		finished.emit("FallingState")
-	elif Input.is_action_just_pressed(player.INPUT_JUMP):
-		finished.emit("JumpingState")
-	elif Input.get_vector(player.INPUT_LEFT, player.INPUT_RIGHT, player.INPUT_FORWARD, player.INPUT_BACKWARD).length() > 0:
+	super.handle_GroundedStates_signal_emission() 
+	if Input.get_vector(player.INPUT_LEFT, player.INPUT_RIGHT, player.INPUT_FORWARD, player.INPUT_BACKWARD).length() > 0:
 		finished.emit("RunningState")
 
-## Called by the state machine upon changing the active state. The `data` parameter
-## is a dictionary with arbitrary data the state can use to initialize itself.
+## Called by the state machine upon changing the active state. The `data` parameter is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(previous_state_path: String, data := {}) -> void:
-	#player.velocity.x = 0
-	#player.velocity.z = 0
 	prints("[IdleState] Idle State Entered")
 
-## Called by the state machine before changing the active state. Use this function
-## to clean up the state.
+## Called by the state machine before changing the active state. Use this function to clean up the state.
 func exit() -> void:
 	prints("[IdleState] Idle State Exited")
