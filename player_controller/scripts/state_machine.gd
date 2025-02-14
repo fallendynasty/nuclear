@@ -2,6 +2,7 @@ class_name StateMachine extends Node
 
 @export var initial_state: State = null
 @export var player: Player
+@export var animation_player: AnimationPlayer
 
 # TODO change, just default above to IdleState or something
 @onready var state: State = (func get_initial_state() -> State:
@@ -12,11 +13,17 @@ class_name StateMachine extends Node
 func _ready() -> void:
 	if player == null:
 		player = owner
+	
+	# TODO jank but whatever
+	if animation_player == null:
+		animation_player = $"../AnimationPlayer"
 
 	for state_node: State in find_children("*", "State"):
 		# jank solution to get player object, will do for now
 		prints("[StateMachine] State Node '%s' found" % state_node.name)
+		# is there a better way to do this 🤨
 		state_node.player = player
+		state_node.animation_player = animation_player
 		state_node.finished.connect(_transition_to_next_state)
 
 	await owner.ready

@@ -1,6 +1,7 @@
 ## Virtual base class State for all player states
 class_name State extends Node
 
+var animation_player: AnimationPlayer
 var player: Player
 
 ## Emitted when the state finishes and wants to transition to another state.
@@ -31,20 +32,27 @@ func exit() -> void:
 func handle_movement() -> void:
 	var input_dir := Input.get_vector(player.INPUT_LEFT, player.INPUT_RIGHT, player.INPUT_FORWARD, player.INPUT_BACKWARD)
 	var move_dir := (player.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	player.velocity.x += move_dir.x * player.MOVE_ACCELERATION 
-	player.velocity.z += move_dir.z * player.MOVE_ACCELERATION 
+	# player.velocity.x += move_dir.x * player.MOVE_ACCELERATION 
+	# player.velocity.z += move_dir.z * player.MOVE_ACCELERATION 
 	
 	#cap the max speed and slow down if the directional movement is not being pressed
-	if abs(player.velocity.x) > player.MAX_SPEED or move_dir.x == 0:
-		player.velocity.x = move_toward(player.velocity.x, 0, player.FRICTION)
-	if abs(player.velocity.z) > player.MAX_SPEED or move_dir.z == 0:
-		player.velocity.z = move_toward(player.velocity.z, 0, player.FRICTION)
+	if move_dir:
+		player.velocity.x =  move_dir.normalized().x * player.MAX_SPEED
+		player.velocity.z =  move_dir.normalized().z * player.MAX_SPEED
+	else:
+		player.velocity.x = 0 
+		player.velocity.z = 0
+
+	# if abs(player.velocity.x) > player.MAX_SPEED or move_dir.x == 0:
+	# 	player.velocity.x = move_toward(player.velocity.x, 0, player.FRICTION)
+	# if abs(player.velocity.z) > player.MAX_SPEED or move_dir.z == 0:
+	# 	player.velocity.z = move_toward(player.velocity.z, 0, player.FRICTION)
 		
 	player.move_and_slide()
 	#print(player.velocity.x, '       ', player.velocity.z, '      ', player.velocity.length())
 	#print(move_dir, 'move_dir')
 	
-# handling signal 'finished' emission for running and idle 
+## handling signal 'finished' emission for running and idle 
 func handle_GroundedStates_signal_emission() -> void: 
 	if not player.is_on_floor():
 		finished.emit("FallingState")
