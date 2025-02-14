@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://5nwe6bxvb1ak"]
+[gd_scene load_steps=8 format=3 uid="uid://5nwe6bxvb1ak"]
 
 [ext_resource type="PackedScene" uid="uid://bpj8ln6w4yv72" path="res://player_controller/player.tscn" id="1_ovhvj"]
+[ext_resource type="Texture2D" uid="uid://dyyr1bb836e8q" path="res://textures/DevTextures2/final/normal/dark/dark_texture4_text.png" id="1_rdtmn"]
 [ext_resource type="PackedScene" uid="uid://baqenyqh6exey" path="res://harmful_objects/spike.tscn" id="2_akbtk"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_p6ibe"]
@@ -15,6 +16,12 @@ background_mode = 2
 sky = SubResource("Sky_l5oqg")
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0rfyi"]
+albedo_texture = ExtResource("1_rdtmn")
+metallic_specular = 0.48
+roughness = 0.0
+uv1_scale = Vector3(4, 4, 4)
 
 [node name="NewPlayerControllerTest" type="Node3D"]
 
@@ -55,12 +62,13 @@ radius = 1.30207
 radial_segments = 24
 
 [node name="floor" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00422287, -0.400185, 19.37)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 use_collision = true
-size = Vector3(62.6459, 0.737427, 65.5749)
+size = Vector3(200, 0.737, 200)
+material = SubResource("StandardMaterial3D_0rfyi")
 
 [node name="Player" parent="." instance=ExtResource("1_ovhvj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.62453)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9.30763)
 
 [node name="spike" parent="." instance=ExtResource("2_akbtk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.64896, 0.51037, 0)
