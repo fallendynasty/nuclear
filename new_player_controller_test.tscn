@@ -72,3 +72,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9.30763)
 
 [node name="spike" parent="." instance=ExtResource("2_akbtk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.64896, 0.51037, 0)
+
+[node name="Boxes" type="Node3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Boxes"]
+transform = Transform3D(3.55226, 0, 0, 0, 1, 0, 0, 0, 4.57643, 0, 0.528781, -4.0554)
+size = Vector3(1, 1.33606, 1)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Boxes"]
+transform = Transform3D(3.55226, 0, 0, 0, 2.31053, 0, 0, 0, 4.57643, -6.49303, 0.882691, -4.0554)
+size = Vector3(1, 1.33606, 1)
