@@ -17,6 +17,7 @@ class_name Player extends CharacterBody3D
 @export var INPUT_BACKWARD : String = "backwards"
 @export var INPUT_JUMP: String = "jump"
 @export var INPUT_SPRINT : String = "sprint"
+@export var INPUT_SLIDE : String = "slide"
 
 @export_group("GUI_controls")
 @export var inventory: Inventory
