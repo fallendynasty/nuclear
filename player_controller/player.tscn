@@ -3,11 +3,18 @@
 [ext_resource type="Script" path="res://player_controller/scripts/player.gd" id="1_njpdr"]
 [ext_resource type="Script" path="res://player_controller/scripts/state_machine.gd" id="1_qshaj"]
 [ext_resource type="PackedScene" uid="uid://b1d48jr23q0of" path="res://guns/gun.tscn" id="2_gdwc4"]
+[ext_resource type="Script" path="res://Inventory/Items/item.gd" id="2_q4qm3"]
 [ext_resource type="Script" path="res://player_controller/scripts/states/idle_state.gd" id="2_rtyuo"]
+[ext_resource type="Script" path="res://Inventory/inventory.gd" id="3_eq6b2"]
 [ext_resource type="Script" path="res://player_controller/scripts/states/running_state.gd" id="3_hwf20"]
 [ext_resource type="Script" path="res://player_controller/scripts/states/jumping_state.gd" id="4_3bpqg"]
+[ext_resource type="PackedScene" uid="uid://c8nab30aeos38" path="res://Inventory/inventory_ui.tscn" id="5_5usyw"]
 [ext_resource type="Script" path="res://player_controller/scripts/states/falling_state.gd" id="5_cygei"]
 [ext_resource type="Script" path="res://player_controller/scripts/states/sliding_state.gd" id="8_76m28"]
+
+[sub_resource type="Resource" id="Resource_tsmg2"]
+script = ExtResource("3_eq6b2")
+items = Array[ExtResource("2_q4qm3")]([])
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lryno"]
 
@@ -109,6 +116,7 @@ _data = {
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER")]
 script = ExtResource("1_njpdr")
 CAMERA_CONTROLLER = NodePath("CameraController/Camera3D")
+inventory = SubResource("Resource_tsmg2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -132,6 +140,8 @@ value = 100.0
 
 [node name="Gun" parent="CameraController/Camera3D" instance=ExtResource("2_gdwc4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.699088, -0.340358, -0.732374)
+
+[node name="Inventory_UI" parent="." instance=ExtResource("5_5usyw")]
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "player")]
 script = ExtResource("1_qshaj")

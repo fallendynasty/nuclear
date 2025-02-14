@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3 uid="uid://bi2iit3t83bd2"]
+
+[ext_resource type="Script" path="res://Inventory/Items/item.gd" id="1_xscbe"]
+
+[resource]
+script = ExtResource("1_xscbe")
+name = "Light Shield"
+item_type = "Armour"
+damage = 0
+defense = 25
