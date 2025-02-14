@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bpj8ln6w4yv72"]
+[gd_scene load_steps=16 format=3 uid="uid://bpj8ln6w4yv72"]
 
 [ext_resource type="Script" path="res://player_controller/scripts/player.gd" id="1_njpdr"]
 [ext_resource type="Script" path="res://player_controller/scripts/state_machine.gd" id="1_qshaj"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://player_controller/scripts/states/running_state.gd" id="3_hwf20"]
 [ext_resource type="Script" path="res://player_controller/scripts/states/jumping_state.gd" id="4_3bpqg"]
 [ext_resource type="Script" path="res://player_controller/scripts/states/falling_state.gd" id="5_cygei"]
+[ext_resource type="Script" path="res://player_controller/scripts/states/sliding_state.gd" id="8_76m28"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lryno"]
 
@@ -19,6 +20,14 @@ material = SubResource("StandardMaterial3D_w8wml")
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3l7j0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_idcgq"]
+
+[sub_resource type="Animation" id="Animation_manu0"]
+resource_name = "slide"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a4ge6"]
+_data = {
+"slide": SubResource("Animation_manu0")
+}
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER")]
 script = ExtResource("1_njpdr")
@@ -62,3 +71,11 @@ script = ExtResource("4_3bpqg")
 
 [node name="FallingState" type="Node" parent="StateMachine"]
 script = ExtResource("5_cygei")
+
+[node name="SlidingState" type="Node" parent="StateMachine"]
+script = ExtResource("8_76m28")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_a4ge6")
+}
