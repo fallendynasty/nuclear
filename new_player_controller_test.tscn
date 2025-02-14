@@ -1,8 +1,26 @@
-[gd_scene load_steps=8 format=3 uid="uid://5nwe6bxvb1ak"]
+[gd_scene load_steps=17 format=3 uid="uid://5nwe6bxvb1ak"]
 
 [ext_resource type="PackedScene" uid="uid://bpj8ln6w4yv72" path="res://player_controller/player.tscn" id="1_ovhvj"]
 [ext_resource type="Texture2D" uid="uid://dyyr1bb836e8q" path="res://textures/DevTextures2/final/normal/dark/dark_texture4_text.png" id="1_rdtmn"]
 [ext_resource type="PackedScene" uid="uid://baqenyqh6exey" path="res://harmful_objects/spike.tscn" id="2_akbtk"]
+[ext_resource type="Texture2D" uid="uid://b7ftuhan0lxq2" path="res://textures/DevTextures2/final/normal/blue/blue_texture8_text.png" id="4_7u2a6"]
+[ext_resource type="Texture2D" uid="uid://dh83fpawcm5pa" path="res://textures/DevTextures2/final/normal/orange/orange_texture8_text.png" id="5_vt46u"]
+[ext_resource type="Texture2D" uid="uid://15nops786sgv" path="res://textures/DevTextures2/final/normal/purple/arrows/purple_texture9_right.png" id="6_53lpq"]
+[ext_resource type="Texture2D" uid="uid://o1ays840yorc" path="res://textures/DevTextures2/final/normal/blue/blue_texture6_text.png" id="7_tqul3"]
+
+[sub_resource type="GDScript" id="GDScript_ds6o3"]
+script/source = "extends Node3D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_p6ibe"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -23,7 +41,20 @@ metallic_specular = 0.48
 roughness = 0.0
 uv1_scale = Vector3(4, 4, 4)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tcmal"]
+albedo_texture = ExtResource("4_7u2a6")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m560y"]
+albedo_texture = ExtResource("5_vt46u")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g1tc2"]
+albedo_texture = ExtResource("6_53lpq")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f1mva"]
+albedo_texture = ExtResource("7_tqul3")
+
 [node name="NewPlayerControllerTest" type="Node3D"]
+script = SubResource("GDScript_ds6o3")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_s71qb")
@@ -68,7 +99,8 @@ size = Vector3(200, 0.737, 200)
 material = SubResource("StandardMaterial3D_0rfyi")
 
 [node name="Player" parent="." instance=ExtResource("1_ovhvj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9.30763)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 6.93012, 0, 10.3142)
+inventory = null
 
 [node name="spike" parent="." instance=ExtResource("2_akbtk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.64896, 0.51037, 0)
@@ -77,8 +109,34 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.64896, 0.51037, 0)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Boxes"]
 transform = Transform3D(3.55226, 0, 0, 0, 1, 0, 0, 0, 4.57643, 0, 0.528781, -4.0554)
+use_collision = true
 size = Vector3(1, 1.33606, 1)
+material = SubResource("StandardMaterial3D_tcmal")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="Boxes"]
-transform = Transform3D(3.55226, 0, 0, 0, 2.31053, 0, 0, 0, 4.57643, -6.49303, 0.882691, -4.0554)
+transform = Transform3D(4.95081, 0, 0, 0, 1.54688, 0, 0, 0, 4.56895, -7.02515, 0.882691, -4.0554)
+use_collision = true
 size = Vector3(1, 1.33606, 1)
+material = SubResource("StandardMaterial3D_m560y")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Boxes"]
+transform = Transform3D(1.47735, 0, 0, 0, 2.62733, 0, 0, 0, 4.59858, -8.2584, 1.52189, 2.33882)
+use_collision = true
+size = Vector3(1, 1.33606, 0.416016)
+material = SubResource("StandardMaterial3D_m560y")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Boxes"]
+transform = Transform3D(1.47023, 0, 0, 0, 3.93143, 0, 0, 0, 4.57643, -5.8843, 1.52189, 2.33882)
+use_collision = true
+size = Vector3(1, 1.33606, 0.416016)
+material = SubResource("StandardMaterial3D_m560y")
+
+[node name="Ramp" type="CSGBox3D" parent="Boxes"]
+transform = Transform3D(4.88494, 0, 0, 0, 2.07547, -1.73484, 0, 0.967809, 3.72037, 6.561, -0.39029, 2.85838)
+use_collision = true
+material = SubResource("StandardMaterial3D_g1tc2")
+
+[node name="Wall" type="CSGBox3D" parent="Boxes"]
+transform = Transform3D(-1.74025e-07, 0, 0.298916, 0, 9.501, 0, -3.98124, 0, -1.3066e-08, -2.87246, 4.40606, -4.63483)
+use_collision = true
+material = SubResource("StandardMaterial3D_f1mva")

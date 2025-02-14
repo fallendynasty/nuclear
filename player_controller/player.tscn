@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bpj8ln6w4yv72"]
+[gd_scene load_steps=21 format=3 uid="uid://bpj8ln6w4yv72"]
 
 [ext_resource type="Script" path="res://player_controller/scripts/player.gd" id="1_njpdr"]
 [ext_resource type="Script" path="res://player_controller/scripts/state_machine.gd" id="1_qshaj"]
@@ -115,8 +115,12 @@ _data = {
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER")]
 script = ExtResource("1_njpdr")
+MAX_SPEED = 7.0
+JUMP_VELOCITY = 7.0
+MOUSE_SENSITIVITY = 0.06
 CAMERA_CONTROLLER = NodePath("CameraController/Camera3D")
 inventory = SubResource("Resource_tsmg2")
+GRAVITY = 17.5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

@@ -18,6 +18,7 @@ class_name Player extends CharacterBody3D
 @export var INPUT_JUMP: String = "jump"
 @export var INPUT_SPRINT : String = "sprint"
 @export var INPUT_SLIDE : String = "slide"
+@export var INPUT_DEBUG_RESET_POSITION: String = "debug_reset_position"
 
 @export_group("GUI_controls")
 @export var inventory: Inventory
@@ -31,7 +32,9 @@ var _player_rotation : Vector3
 var _camera_rotation : Vector3
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 # var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-var GRAVITY = 9.81
+
+@export_group("Environmental Stats")
+@export var GRAVITY = 9.81
 
 # Healthbar and gun stuff
 @onready var healthbar = $CameraController/Camera3D/HealthBar
@@ -39,6 +42,8 @@ var GRAVITY = 9.81
 var health = 100
 var bullet = load("res://guns/bullet.tscn")
 var bullet_instance
+
+var starting_coordinates: Vector3
 
 func _unhandled_input(event: InputEvent) -> void:
 	_mouse_input = event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
@@ -49,8 +54,12 @@ func _unhandled_input(event: InputEvent) -> void:
 func _input(event):
 	if Input.is_key_pressed(KEY_ESCAPE):
 		get_tree().quit()
-	
+	elif Input.is_action_just_pressed(INPUT_DEBUG_RESET_POSITION):
+		# reset player position
+		position = starting_coordinates
+
 func _ready():
+	starting_coordinates = position
 	add_to_group("player") # for spikes to detect the player
 	if CAMERA_CONTROLLER == null:
 		CAMERA_CONTROLLER = $CameraController/Camera3D
