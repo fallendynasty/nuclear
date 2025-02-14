@@ -18,6 +18,9 @@ class_name Player extends CharacterBody3D
 @export var INPUT_JUMP: String = "jump"
 @export var INPUT_SPRINT : String = "sprint"
 
+@export_group("GUI_controls")
+@export var inventory: Inventory
+
 #instantiate environment variables
 var _mouse_input : bool = false
 var _rotation_input : float
