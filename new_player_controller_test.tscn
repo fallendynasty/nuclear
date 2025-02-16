@@ -1,5 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://5nwe6bxvb1ak"]
 
+[ext_resource type="Texture2D" uid="uid://bto6mfjkcw8ky" path="res://textures/prototyping/dark/dark_texture4_text.png" id="1_32dbb"]
 [ext_resource type="PackedScene" uid="uid://bpj8ln6w4yv72" path="res://player_controller/player.tscn" id="1_ovhvj"]
 [ext_resource type="PackedScene" uid="uid://baqenyqh6exey" path="res://harmful_objects/spike.tscn" id="2_akbtk"]
 [ext_resource type="Texture2D" uid="uid://bomvmvxqhy60n" path="res://textures/prototyping/purple/arrows/purple_texture9_right.png" id="3_8oxqj"]
@@ -33,13 +34,8 @@ sky = SubResource("Sky_l5oqg")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_c085x"]
-load_path = "res://.godot/imported/dark_texture4_text.png-dda746ed8932fdc92a595bab53c0827c.s3tc.ctex"
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0rfyi"]
-albedo_texture = SubResource("CompressedTexture2D_c085x")
-metallic_specular = 0.48
-roughness = 0.0
+albedo_texture = ExtResource("1_32dbb")
 uv1_scale = Vector3(4, 4, 4)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tcmal"]
@@ -58,7 +54,7 @@ script = SubResource("GDScript_ds6o3")
 environment = SubResource("Environment_s71qb")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 10, 5.853, 2.254)
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 10.0328, 15.4077, 2.963)
 shadow_enabled = true
 
 [node name="goal" type="CSGTorus3D" parent="."]
@@ -93,11 +89,11 @@ radial_segments = 24
 [node name="floor" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 use_collision = true
-size = Vector3(200, 0.737, 200)
+size = Vector3(1000, 0.737, 1000)
 material = SubResource("StandardMaterial3D_0rfyi")
 
 [node name="Player" parent="." instance=ExtResource("1_ovhvj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.35676, 0, -30.494)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.35423, 0.00648355, -30.4925)
 RUNNING_SPEED = 8.0
 inventory = null
 
@@ -107,15 +103,27 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.64896, 0.51037, 0)
 [node name="Boxes" type="Node3D" parent="."]
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Boxes"]
-transform = Transform3D(3.55226, 0, 0, 0, 1, 0, 0, 0, 4.57643, 7.05105, 0.528781, -4.69746)
+transform = Transform3D(3.55226, 0, 0, 0, 1, 0, 0, 0, 4.57643, 7.05105, 0.528781, -5.49772)
 use_collision = true
 size = Vector3(1, 1.33606, 1)
 material = SubResource("StandardMaterial3D_tcmal")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="Boxes"]
-transform = Transform3D(6.63088, 0, 0, 0, 0.709632, 0, 0, 0, 4.57643, 1.19097, 1.92661, -10.0263)
+transform = Transform3D(6.63088, 0, 0, 0, 0.709632, 0, 0, 0, 4.57643, 14.931, 1.92661, 3.10641)
 use_collision = true
 size = Vector3(1, 1.33606, 1)
+material = SubResource("StandardMaterial3D_tcmal")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Boxes"]
+transform = Transform3D(4.94422, 0, 0, 0, 0.709632, 0, 0, 0, 7.99883, -10.88, 6.14309, 3.10641)
+use_collision = true
+size = Vector3(1.328, 1.33606, 1)
+material = SubResource("StandardMaterial3D_tcmal")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Boxes"]
+transform = Transform3D(4.94422, 0, 0, 0, 0.709632, 0, 0, 0, 7.99883, -10.88, 9.7994, -11.5132)
+use_collision = true
+size = Vector3(1.328, 1.33606, 1)
 material = SubResource("StandardMaterial3D_tcmal")
 
 [node name="Ramp" type="CSGBox3D" parent="Boxes"]
@@ -124,6 +132,12 @@ use_collision = true
 material = SubResource("StandardMaterial3D_g1tc2")
 
 [node name="Wall" type="CSGBox3D" parent="Boxes"]
-transform = Transform3D(-1.74025e-07, 0, 0.298916, 0, 9.501, 0, -3.98124, 0, -1.3066e-08, -2.87246, 4.40606, -4.63483)
+transform = Transform3D(21.1722, 0, 0, 0, 9.501, 0, 0, 0, 0.298916, 6.62085, 4.40606, 9.43865)
 use_collision = true
+material = SubResource("StandardMaterial3D_f1mva")
+
+[node name="Wall2" type="CSGBox3D" parent="Boxes"]
+transform = Transform3D(-9.25467e-07, 0, 0.298916, 0, 9.501, 0, -21.1722, 0, -1.3066e-08, -17.5586, 7.82059, -5.16022)
+use_collision = true
+size = Vector3(1.06735, 1.31406, 1)
 material = SubResource("StandardMaterial3D_f1mva")

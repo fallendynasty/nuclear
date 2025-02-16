@@ -46,8 +46,7 @@ func enter(previous_state_path: String, data := {}) -> void:
 	var input_dir := Input.get_vector(player.INPUT_LEFT, player.INPUT_RIGHT, player.INPUT_FORWARD, player.INPUT_BACKWARD)
 	var move_dir := (player.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
-	# if player.velocity.length() < (move_dir * player.SLIDE_SPEED).length():
-	# 	player.velocity += move_dir * player.SLIDE_SPEED
+	# TODO fix bug where, while running, pressing slide + jump on the same frame, then holding slide, allows for infinite height
 	var current_speed := player.velocity.length()
 	if current_speed > 0:
 		player.velocity += move_dir * move_toward(player.SLIDE_SPEED, 0, 1/(current_speed**2))
