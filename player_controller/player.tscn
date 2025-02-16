@@ -69,7 +69,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_manu0"]
 resource_name = "slide"
-length = 0.15
+length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -115,7 +115,6 @@ _data = {
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER")]
 script = ExtResource("1_njpdr")
-MAX_SPEED = 7.0
 JUMP_VELOCITY = 7.0
 MOUSE_SENSITIVITY = 0.06
 CAMERA_CONTROLLER = NodePath("CameraController/Camera3D")

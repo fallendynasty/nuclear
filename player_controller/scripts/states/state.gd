@@ -3,6 +3,7 @@ class_name State extends Node
 
 var animation_player: AnimationPlayer
 var player: Player
+var horizontal_velocity: Vector2
 
 ## Emitted when the state finishes and wants to transition to another state.
 signal finished(next_state_path: String, data: Dictionary)
@@ -27,30 +28,32 @@ func enter(previous_state_path: String, data := {}) -> void:
 func exit() -> void:
 	pass
 
+## get current speed, including the effects of friction
+func _calculate_current_speed(move_dir: Vector3, friction: float) -> float:
+	return move_toward(abs(horizontal_velocity.length()), abs(move_dir.x * player.RUNNING_SPEED), friction * horizontal_velocity.length())
+
 # handling movement for all states
 # a bit janky
-func handle_movement() -> void:
+func handle_movement(delta: float, friction: float = player.FRICTION) -> void:
+	horizontal_velocity = Vector2(player.velocity.x, player.velocity.z)
+	print("speed:", horizontal_velocity.length())
 	var input_dir := Input.get_vector(player.INPUT_LEFT, player.INPUT_RIGHT, player.INPUT_FORWARD, player.INPUT_BACKWARD)
 	var move_dir := (player.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	# player.velocity.x += move_dir.x * player.MOVE_ACCELERATION 
 	# player.velocity.z += move_dir.z * player.MOVE_ACCELERATION 
-	
-	#cap the max speed and slow down if the directional movement is not being pressed
+
 	if move_dir:
-		player.velocity.x =  move_dir.normalized().x * player.MAX_SPEED
-		player.velocity.z =  move_dir.normalized().z * player.MAX_SPEED
-	else:
-		player.velocity.x = 0 
+		if move_dir.x != 0:
+			player.velocity.x = move_dir.x * max(player.RUNNING_SPEED, _calculate_current_speed(move_dir, friction))
+		if move_dir.z != 0:
+			player.velocity.z = move_dir.z * max(player.RUNNING_SPEED, _calculate_current_speed(move_dir, friction))
+	# If player is *moving* in the air and lets go of movement keys,
+	# continue moving until they hit the floor instead of stopping abruptly
+	elif player.is_on_floor():
+		player.velocity.x = 0
 		player.velocity.z = 0
 
-	# if abs(player.velocity.x) > player.MAX_SPEED or move_dir.x == 0:
-	# 	player.velocity.x = move_toward(player.velocity.x, 0, player.FRICTION)
-	# if abs(player.velocity.z) > player.MAX_SPEED or move_dir.z == 0:
-	# 	player.velocity.z = move_toward(player.velocity.z, 0, player.FRICTION)
-		
 	player.move_and_slide()
-	#print(player.velocity.x, '       ', player.velocity.z, '      ', player.velocity.length())
-	#print(move_dir, 'move_dir')
 	
 ## handling signal 'finished' emission for running and idle 
 func handle_GroundedStates_signal_emission() -> void: 

@@ -97,7 +97,8 @@ size = Vector3(200, 0.737, 200)
 material = SubResource("StandardMaterial3D_0rfyi")
 
 [node name="Player" parent="." instance=ExtResource("1_ovhvj")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 6.93012, 0, 10.3142)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.35676, 0, -30.494)
+RUNNING_SPEED = 8.0
 inventory = null
 
 [node name="spike" parent="." instance=ExtResource("2_akbtk")]
@@ -118,7 +119,7 @@ size = Vector3(1, 1.33606, 1)
 material = SubResource("StandardMaterial3D_tcmal")
 
 [node name="Ramp" type="CSGBox3D" parent="Boxes"]
-transform = Transform3D(4.88494, 0, 0, 0, 2.07547, -1.73484, 0, 0.967809, 3.72037, 6.561, -0.39029, 2.85838)
+transform = Transform3D(-4.88494, -8.46085e-08, -3.25245e-07, 0, 2.07547, -1.73484, 4.27055e-07, -0.967808, -3.72037, 6.07002, -0.39029, -18.9754)
 use_collision = true
 material = SubResource("StandardMaterial3D_g1tc2")
 

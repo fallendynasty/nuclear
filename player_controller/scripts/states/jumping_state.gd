@@ -11,7 +11,7 @@ func update(_delta: float) -> void:
 ## Called by the state machine on the engine's physics update tick.
 func physics_update(_delta: float) -> void:
 	player.velocity.y -= player.GRAVITY * _delta
-	super.handle_movement() # air strafing
+	super.handle_movement(_delta, 0) # air strafing
 
 	# player is jumping if going upwards, falling if going downwards
 	if player.velocity.y < 0:
