@@ -1,12 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://5nwe6bxvb1ak"]
+[gd_scene load_steps=15 format=3 uid="uid://5nwe6bxvb1ak"]
 
 [ext_resource type="PackedScene" uid="uid://bpj8ln6w4yv72" path="res://player_controller/player.tscn" id="1_ovhvj"]
-[ext_resource type="Texture2D" uid="uid://dyyr1bb836e8q" path="res://textures/DevTextures2/final/normal/dark/dark_texture4_text.png" id="1_rdtmn"]
 [ext_resource type="PackedScene" uid="uid://baqenyqh6exey" path="res://harmful_objects/spike.tscn" id="2_akbtk"]
-[ext_resource type="Texture2D" uid="uid://b7ftuhan0lxq2" path="res://textures/DevTextures2/final/normal/blue/blue_texture8_text.png" id="4_7u2a6"]
-[ext_resource type="Texture2D" uid="uid://dh83fpawcm5pa" path="res://textures/DevTextures2/final/normal/orange/orange_texture8_text.png" id="5_vt46u"]
-[ext_resource type="Texture2D" uid="uid://15nops786sgv" path="res://textures/DevTextures2/final/normal/purple/arrows/purple_texture9_right.png" id="6_53lpq"]
-[ext_resource type="Texture2D" uid="uid://o1ays840yorc" path="res://textures/DevTextures2/final/normal/blue/blue_texture6_text.png" id="7_tqul3"]
+[ext_resource type="Texture2D" uid="uid://bomvmvxqhy60n" path="res://textures/prototyping/purple/arrows/purple_texture9_right.png" id="3_8oxqj"]
+[ext_resource type="Texture2D" uid="uid://b5qqb3qqv3a7k" path="res://textures/prototyping/blue/blue_texture8_text.png" id="3_q0bbe"]
+[ext_resource type="Texture2D" uid="uid://b63lqky7ysc00" path="res://textures/prototyping/green/green_texture1_text.png" id="5_lskb1"]
 
 [sub_resource type="GDScript" id="GDScript_ds6o3"]
 script/source = "extends Node3D
@@ -35,23 +33,23 @@ sky = SubResource("Sky_l5oqg")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_c085x"]
+load_path = "res://.godot/imported/dark_texture4_text.png-dda746ed8932fdc92a595bab53c0827c.s3tc.ctex"
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0rfyi"]
-albedo_texture = ExtResource("1_rdtmn")
+albedo_texture = SubResource("CompressedTexture2D_c085x")
 metallic_specular = 0.48
 roughness = 0.0
 uv1_scale = Vector3(4, 4, 4)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tcmal"]
-albedo_texture = ExtResource("4_7u2a6")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m560y"]
-albedo_texture = ExtResource("5_vt46u")
+albedo_texture = ExtResource("3_q0bbe")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g1tc2"]
-albedo_texture = ExtResource("6_53lpq")
+albedo_texture = ExtResource("3_8oxqj")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f1mva"]
-albedo_texture = ExtResource("7_tqul3")
+albedo_texture = ExtResource("5_lskb1")
 
 [node name="NewPlayerControllerTest" type="Node3D"]
 script = SubResource("GDScript_ds6o3")
@@ -108,28 +106,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.64896, 0.51037, 0)
 [node name="Boxes" type="Node3D" parent="."]
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Boxes"]
-transform = Transform3D(3.55226, 0, 0, 0, 1, 0, 0, 0, 4.57643, 0, 0.528781, -4.0554)
+transform = Transform3D(3.55226, 0, 0, 0, 1, 0, 0, 0, 4.57643, 7.05105, 0.528781, -4.69746)
 use_collision = true
 size = Vector3(1, 1.33606, 1)
 material = SubResource("StandardMaterial3D_tcmal")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="Boxes"]
-transform = Transform3D(4.95081, 0, 0, 0, 1.54688, 0, 0, 0, 4.56895, -7.02515, 0.882691, -4.0554)
+transform = Transform3D(6.63088, 0, 0, 0, 0.709632, 0, 0, 0, 4.57643, 1.19097, 1.92661, -10.0263)
 use_collision = true
 size = Vector3(1, 1.33606, 1)
-material = SubResource("StandardMaterial3D_m560y")
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="Boxes"]
-transform = Transform3D(1.47735, 0, 0, 0, 2.62733, 0, 0, 0, 4.59858, -8.2584, 1.52189, 2.33882)
-use_collision = true
-size = Vector3(1, 1.33606, 0.416016)
-material = SubResource("StandardMaterial3D_m560y")
-
-[node name="CSGBox3D4" type="CSGBox3D" parent="Boxes"]
-transform = Transform3D(1.47023, 0, 0, 0, 3.93143, 0, 0, 0, 4.57643, -5.8843, 1.52189, 2.33882)
-use_collision = true
-size = Vector3(1, 1.33606, 0.416016)
-material = SubResource("StandardMaterial3D_m560y")
+material = SubResource("StandardMaterial3D_tcmal")
 
 [node name="Ramp" type="CSGBox3D" parent="Boxes"]
 transform = Transform3D(4.88494, 0, 0, 0, 2.07547, -1.73484, 0, 0.967809, 3.72037, 6.561, -0.39029, 2.85838)
