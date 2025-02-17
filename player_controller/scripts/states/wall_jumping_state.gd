@@ -3,7 +3,7 @@ class_name WallJumpingState extends State
 var _frame_count: int = 0
 
 ## number of frames for wall jump to last. Cannot move while wall jumping
-var _duration_frames: int = 12
+var _duration_frames: int = 6
 
 ## Called by the state machine when receiving unhandled input events.
 func handle_input(_event: InputEvent) -> void:
