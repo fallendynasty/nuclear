@@ -136,6 +136,16 @@ transform = Transform3D(21.1722, 0, 0, 0, 9.501, 0, 0, 0, 0.298916, 6.62085, 4.4
 use_collision = true
 material = SubResource("StandardMaterial3D_f1mva")
 
+[node name="Wall3" type="CSGBox3D" parent="Boxes"]
+transform = Transform3D(-9.25466e-07, 0, 0.298916, 0, 9.501, 0, -21.1722, 0, -1.3066e-08, 10.743, 4.40606, -45.3761)
+use_collision = true
+material = SubResource("StandardMaterial3D_f1mva")
+
+[node name="Wall4" type="CSGBox3D" parent="Boxes"]
+transform = Transform3D(-9.25466e-07, 0, 0.298916, 0, 9.501, 0, -21.1722, 0, -1.3066e-08, 3.54766, 4.40606, -45.3761)
+use_collision = true
+material = SubResource("StandardMaterial3D_f1mva")
+
 [node name="Wall2" type="CSGBox3D" parent="Boxes"]
 transform = Transform3D(-9.25467e-07, 0, 0.298916, 0, 9.501, 0, -21.1722, 0, -1.3066e-08, -17.5586, 7.82059, -5.16022)
 use_collision = true
