@@ -56,7 +56,7 @@ func handle_movement(delta: float, friction: float = player.FRICTION) -> void:
 	player.move_and_slide()
 	
 ## handling signal 'finished' emission for running and idle 
-func handle_GroundedStates_signal_emission() -> void: 
+func handle_grounded_states_signal_emission() -> void: 
 	if not player.is_on_floor():
 		finished.emit("FallingState")
 	elif Input.is_action_just_pressed(player.INPUT_JUMP):

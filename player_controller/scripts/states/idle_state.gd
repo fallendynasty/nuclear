@@ -11,7 +11,7 @@ func update(_delta: float) -> void:
 ## Called by the state machine on the engine's physics update tick.
 func physics_update(_delta: float) -> void:
 	# NOTE: since we are on the floor, we can ignore gravity
-	super.handle_GroundedStates_signal_emission()
+	super.handle_grounded_states_signal_emission()
 
 	if Input.get_vector(player.INPUT_LEFT, player.INPUT_RIGHT, player.INPUT_FORWARD, player.INPUT_BACKWARD).length() > 0:
 		finished.emit("RunningState")	
