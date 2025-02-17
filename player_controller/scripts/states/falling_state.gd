@@ -21,6 +21,9 @@ func physics_update(_delta: float) -> void:
 	player.velocity.y -= player.GRAVITY * _delta
 	super.handle_movement(_delta, 0) # handle air movements (air strafing and stuff)
 
+	if player.is_on_wall_only() and Input.is_action_just_pressed(player.INPUT_JUMP):
+		finished.emit("WallJumpingState")
+
 	_buffer_slide()
 
 	if player.velocity.y == 0: # player on floor, check velocity => idle or running
@@ -29,8 +32,8 @@ func physics_update(_delta: float) -> void:
 			finished.emit("SlidingState")
 			return
 
-		var horizontal_velocity = Vector2(player.velocity.x, player.velocity.z).length()
-		if horizontal_velocity > 0:
+		# var horizontal_velocity = Vector2(player.velocity.x, player.velocity.z).length()
+		if player.velocity.length() > 0:
 			finished.emit("RunningState")
 		else:
 			finished.emit("IdleState")

@@ -109,21 +109,27 @@ size = Vector3(1, 1.33606, 1)
 material = SubResource("StandardMaterial3D_tcmal")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="Boxes"]
-transform = Transform3D(6.63088, 0, 0, 0, 0.709632, 0, 0, 0, 4.57643, 14.931, 1.92661, 3.10641)
+transform = Transform3D(6.63088, 0, 0, 0, 0.709632, 0, 0, 0, 4.57643, 13.1308, 1.92661, 4.4209)
 use_collision = true
-size = Vector3(1, 1.33606, 1)
+size = Vector3(1.54297, 1.33606, 2.11987)
 material = SubResource("StandardMaterial3D_tcmal")
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="Boxes"]
-transform = Transform3D(4.94422, 0, 0, 0, 0.709632, 0, 0, 0, 7.99883, -10.88, 6.14309, 3.10641)
+transform = Transform3D(4.94422, 0, 0, 0, 0.709632, 0, 0, 0, 7.99883, -11.9057, 5.08528, 1.75309)
 use_collision = true
-size = Vector3(1.328, 1.33606, 1)
+size = Vector3(1.74289, 1.33606, 1.33838)
 material = SubResource("StandardMaterial3D_tcmal")
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="Boxes"]
-transform = Transform3D(4.94422, 0, 0, 0, 0.709632, 0, 0, 0, 7.99883, -10.88, 9.7994, -11.5132)
+transform = Transform3D(4.94422, 0, 0, 0, 0.709632, 0, 0, 0, 7.99883, -17.2971, 5.04606, -11.9311)
 use_collision = true
-size = Vector3(1.328, 1.33606, 1)
+size = Vector3(3.9238, 1.33606, 1.10449)
+material = SubResource("StandardMaterial3D_tcmal")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Boxes"]
+transform = Transform3D(4.94422, 0, 0, 0, 0.709632, 0, 0, 0, 7.99883, -0.145781, 3.25833, 7.60112)
+use_collision = true
+size = Vector3(1.328, 1.33606, 0.426758)
 material = SubResource("StandardMaterial3D_tcmal")
 
 [node name="Ramp" type="CSGBox3D" parent="Boxes"]
@@ -132,8 +138,9 @@ use_collision = true
 material = SubResource("StandardMaterial3D_g1tc2")
 
 [node name="Wall" type="CSGBox3D" parent="Boxes"]
-transform = Transform3D(21.1722, 0, 0, 0, 9.501, 0, 0, 0, 0.298916, 6.62085, 4.40606, 9.43865)
+transform = Transform3D(21.1722, 0, 0, 0, 9.501, 0, 0, 0, 0.298916, 1.028, 4.40606, 9.43865)
 use_collision = true
+size = Vector3(1.52832, 1, 1)
 material = SubResource("StandardMaterial3D_f1mva")
 
 [node name="Wall3" type="CSGBox3D" parent="Boxes"]
