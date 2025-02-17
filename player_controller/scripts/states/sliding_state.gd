@@ -21,6 +21,9 @@ func physics_update(_delta: float) -> void:
 
 	player.move_and_slide()
 
+	if not player.is_on_floor():
+		finished.emit("FallingState")
+
 	print("sliding speed:", player.velocity.length())
 	if Input.is_action_just_pressed(player.INPUT_JUMP):
 		finished.emit("JumpingState")
@@ -40,9 +43,6 @@ func enter(previous_state_path: String, data := {}) -> void:
 
 	initial_horizontal_velocity = Vector3(player.velocity.x, 0, player.velocity.z)
 
-	# fix bug where, while running, pressing slide + jump on the same frame, then holding slide, allows for infinite height
-	# assume player can only slide on the ground => y velocity should be 0
-	player.velocity.y = 0
 	var input_dir := Input.get_vector(player.INPUT_LEFT, player.INPUT_RIGHT, player.INPUT_FORWARD, player.INPUT_BACKWARD)
 	var move_dir := (player.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
