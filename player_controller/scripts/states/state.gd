@@ -29,8 +29,15 @@ func exit() -> void:
 	pass
 
 ## get current speed, including the effects of friction
-func _calculate_current_speed(move_dir: Vector3, friction: float) -> float:
-	return move_toward(abs(horizontal_velocity.length()), abs(move_dir.x * player.RUNNING_SPEED), friction * horizontal_velocity.length())
+func _calculate_current_speed(delta: float, move_dir: float, friction: float) -> float:
+	return move_dir * max(
+		player.RUNNING_SPEED,
+		move_toward(
+			abs(horizontal_velocity.length()),
+			abs(move_dir * player.RUNNING_SPEED),
+			friction * horizontal_velocity.length() * delta
+		)
+	)
 
 # handling movement for all states
 # a bit janky
@@ -44,9 +51,9 @@ func handle_movement(delta: float, friction: float = player.FRICTION) -> void:
 
 	if move_dir:
 		if move_dir.x != 0:
-			player.velocity.x = move_dir.x * max(player.RUNNING_SPEED, _calculate_current_speed(move_dir, friction))
+			player.velocity.x = move_toward(player.velocity.x, _calculate_current_speed(delta, move_dir.x, friction), player.MOVE_ACCELERATION * delta)
 		if move_dir.z != 0:
-			player.velocity.z = move_dir.z * max(player.RUNNING_SPEED, _calculate_current_speed(move_dir, friction))
+			player.velocity.z = move_toward(player.velocity.z, _calculate_current_speed(delta, move_dir.z, friction), player.MOVE_ACCELERATION * delta)
 	# If player is *moving* in the air and lets go of movement keys,
 	# continue moving until they hit the floor instead of stopping abruptly
 	elif player.is_on_floor():

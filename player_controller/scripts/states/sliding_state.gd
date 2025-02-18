@@ -16,8 +16,8 @@ func update(_delta: float) -> void:
 
 ## Called by the state machine on the engine's physics update tick.
 func physics_update(_delta: float) -> void:
-	player.velocity.x = move_toward(player.velocity.x, initial_horizontal_velocity.x, abs(player.FRICTION * player.velocity.x / 2))
-	player.velocity.z = move_toward(player.velocity.z, initial_horizontal_velocity.z, abs(player.FRICTION * player.velocity.z / 2))
+	player.velocity.x = move_toward(player.velocity.x, initial_horizontal_velocity.x, abs(player.FRICTION * _delta * player.velocity.x / 2))
+	player.velocity.z = move_toward(player.velocity.z, initial_horizontal_velocity.z, abs(player.FRICTION * _delta * player.velocity.z / 2))
 
 	player.move_and_slide()
 
@@ -47,7 +47,7 @@ func enter(previous_state_path: String, data := {}) -> void:
 	var move_dir := (player.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
 	var current_speed := player.velocity.length()
-	if current_speed > 0:
+	if roundf(current_speed) > 0:
 		player.velocity += move_dir * move_toward(player.SLIDE_SPEED, 0, 1/(current_speed**2))
 	else:
 		player.velocity += -player.transform.basis.z * player.SLIDE_SPEED

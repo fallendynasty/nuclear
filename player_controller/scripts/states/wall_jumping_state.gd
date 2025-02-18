@@ -34,7 +34,7 @@ func physics_update(_delta: float) -> void:
 
 ## Called by the state machine upon changing the active state. The `data` parameter is a dictionary with arbitrary data the state can use to initialize itself.
 func enter(previous_state_path: String, data := {}) -> void:
-	player.velocity.y += player.JUMP_VELOCITY * 0.5
+	player.velocity.y += player.JUMP_VELOCITY
 	player.velocity += player.get_wall_normal() * player.JUMP_VELOCITY
 	prints("[WallJumpingState] WallJumping State Entered")
 

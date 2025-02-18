@@ -1,12 +1,12 @@
 class_name Player extends CharacterBody3D
 
 @export_group("Character Stats")
-@export var MOVE_ACCELERATION : float = 10.0/60 # 0.5s to go from 0 to max speed
+@export var MOVE_ACCELERATION : float = 50.0
 @export var RUNNING_SPEED : float = 10.0
 @export var SLIDE_SPEED : float = 14.0
-@export var FRICTION : float = 10.0/60 # 0.5s to go from max speed to 0
+@export var FRICTION : float = 8.0 # 0.5s to go from max speed to 0
 @export var JUMP_VELOCITY : float = 7.5
-@export var WALL_JUMP_VELOCITY : float = 5.0
+@export var WALL_JUMP_VELOCITY : float = 6.5
 @export var MOUSE_SENSITIVITY : float = 0.2
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
 @export var TILT_UPPER_LIMIT := deg_to_rad(90.0)
