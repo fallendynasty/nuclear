@@ -10,8 +10,8 @@ func update(_delta: float) -> void:
 
 ## Called by the state machine on the engine's physics update tick.
 func physics_update(_delta: float) -> void:
-	super.handle_movement()
-	super.handle_GroundedStates_signal_emission()
+	super.handle_movement(_delta)
+	super.handle_grounded_states_signal_emission()
 	if Input.is_action_just_pressed(player.INPUT_SLIDE):
 		finished.emit("SlidingState")
 
