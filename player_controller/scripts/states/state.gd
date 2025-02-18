@@ -30,14 +30,27 @@ func exit() -> void:
 
 ## get current speed, including the effects of friction
 func _calculate_current_speed(delta: float, move_dir: float, friction: float) -> float:
-	return move_dir * max(
-		player.RUNNING_SPEED,
-		move_toward(
-			abs(horizontal_velocity.length()),
-			abs(move_dir * player.RUNNING_SPEED),
-			friction * horizontal_velocity.length() * delta
-		)
-	)
+	# if current speed < player running speed, accelerate to running speed
+	var current_speed := horizontal_velocity.length()
+	if horizontal_velocity.length() <= player.RUNNING_SPEED:
+		return move_dir * move_toward(current_speed, player.RUNNING_SPEED, player.MOVE_ACCELERATION * delta)
+
+	# however, if current speed > player running speed, e.g. from force from explosion, slide jumping, etc,
+	if friction == 0:
+		# decelerate down to runnning speed if on ground
+		return move_dir * move_toward(current_speed, player.RUNNING_SPEED, friction * current_speed * delta)
+	else:
+		# keep momentum
+		return move_dir * current_speed * player.MOVE_ACCELERATION * delta
+
+	# return move_dir * max(
+	# 	player.RUNNING_SPEED,
+	# 	move_toward(
+	# 		abs(horizontal_velocity.length()),
+	# 		abs(move_dir * player.RUNNING_SPEED),
+	# 		friction * horizontal_velocity.length() * delta
+	# 	)
+	# )
 
 # handling movement for all states
 # a bit janky
