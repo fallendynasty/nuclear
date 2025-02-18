@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://player_controller/scripts/player.gd" id="1_njpdr"]
 [ext_resource type="Script" path="res://player_controller/scripts/state_machine.gd" id="1_qshaj"]
-[ext_resource type="PackedScene" uid="uid://b1d48jr23q0of" path="res://guns/gun.tscn" id="2_gdwc4"]
+[ext_resource type="PackedScene" uid="uid://b1d48jr23q0of" path="res://weapons/gun.tscn" id="2_gdwc4"]
 [ext_resource type="Script" path="res://Inventory/Items/item.gd" id="2_q4qm3"]
 [ext_resource type="Script" path="res://player_controller/scripts/states/idle_state.gd" id="2_rtyuo"]
 [ext_resource type="Script" path="res://Inventory/inventory.gd" id="3_eq6b2"]
