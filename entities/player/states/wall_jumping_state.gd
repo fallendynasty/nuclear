@@ -22,7 +22,7 @@ func physics_update(_delta: float) -> void:
 		_frame_count += 1
 		return
 
-	super.handle_movement(_delta, 0) # air strafing
+	player.handle_movement(_delta, 0) # air strafing
 
 	if player.velocity.y < 0:
 		finished.emit("FallingState")

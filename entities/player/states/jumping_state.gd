@@ -11,7 +11,7 @@ func update(_delta: float) -> void:
 ## Called by the state machine on the engine's physics update tick.
 func physics_update(_delta: float) -> void:
 	player.velocity.y -= player.GRAVITY * _delta
-	super.handle_movement(_delta, 0) # air strafing
+	player.handle_movement(_delta, 0) # air strafing
 
 	if player.is_on_wall_only() and Input.is_action_just_pressed(player.INPUT_JUMP):
 		finished.emit("WallJumpingState")

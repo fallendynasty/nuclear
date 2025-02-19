@@ -2,8 +2,6 @@
 
 [ext_resource type="Script" path="res://entities/weapons/prototype_gun/bullet.gd" id="1_345qn"]
 
-
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x8ler"]
 albedo_color = Color(1, 0.194376, 0.144153, 1)
 emission_enabled = true

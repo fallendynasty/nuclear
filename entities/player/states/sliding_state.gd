@@ -48,9 +48,9 @@ func enter(previous_state_path: String, data := {}) -> void:
 
 	var current_speed := player.velocity.length()
 	if roundf(current_speed) > 0:
-		player.velocity += move_dir * move_toward(player.SLIDE_SPEED, 0, 1/(current_speed**2))
+		player.velocity += move_dir * move_toward(player.SLIDING_SPEED, 0, 1/(current_speed**2))
 	else:
-		player.velocity += -player.transform.basis.z * player.SLIDE_SPEED
+		player.velocity += -player.transform.basis.z * player.SLIDING_SPEED
 
 ## Called by the state machine before changing the active state. Use this function to clean up the state.
 func exit() -> void:

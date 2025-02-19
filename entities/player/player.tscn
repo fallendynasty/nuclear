@@ -114,12 +114,13 @@ _data = {
 "slide": SubResource("Animation_manu0")
 }
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER", "healthbar")]
 script = ExtResource("1_njpdr")
-MOUSE_SENSITIVITY = 0.06
-CAMERA_CONTROLLER = NodePath("CameraController/Camera3D")
-inventory = SubResource("Resource_tsmg2")
 GRAVITY = 17.5
+MOUSE_SENSITIVITY = 0.06
+inventory = SubResource("Resource_tsmg2")
+CAMERA_CONTROLLER = NodePath("CameraController/Camera3D")
+healthbar = NodePath("CameraController/Camera3D/HealthBar")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -145,10 +146,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.699088, -0.340358, -0.73237
 
 [node name="Inventory_UI" parent="." instance=ExtResource("5_5usyw")]
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "player")]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "player", "animation_player")]
 script = ExtResource("1_qshaj")
 initial_state = NodePath("IdleState")
 player = NodePath("..")
+animation_player = NodePath("../AnimationPlayer")
 
 [node name="IdleState" type="Node" parent="StateMachine"]
 script = ExtResource("2_rtyuo")
