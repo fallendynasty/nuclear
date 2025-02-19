@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3 uid="uid://x3bu6tx8v06r"]
+
+[ext_resource type="Script" path="res://entities/items/item.gd" id="1_7wkuw"]
+
+
+[resource]
+script = ExtResource("1_7wkuw")
+name = "Heavy Shield"
+item_type = "Armour"
+damage = 0
+defense = 50

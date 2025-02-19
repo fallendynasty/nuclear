@@ -3,7 +3,7 @@
 - [ ] improve / add more movement options (e.g. sliding, wall jumping, etc.)
 - [x] re-implement shooting
   - [x] add shooting script e.g. `guns/gun.gd`
-    - add shooting logic in `_ready()` or `_physics_process()`, etc.
+	- add shooting logic in `_ready()` or `_physics_process()`, etc.
   - [x] add `guns/gun.tscn` node to `player_controller/player.tscn` node
   - [x] attach script `guns/gun.gd` to gun
 - [x] re-implement health bar (and damaging spike?) in new player script `player_controller/scripts/player.gd`

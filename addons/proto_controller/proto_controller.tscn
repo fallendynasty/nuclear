@@ -1,7 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://bs72ogkvdd7d6"]
 
 [ext_resource type="Script" path="res://addons/proto_controller/proto_controller.gd" id="1_ucva2"]
-[ext_resource type="PackedScene" uid="uid://b1d48jr23q0of" path="res://weapons/gun.tscn" id="2_xg74u"]
+[ext_resource type="PackedScene" uid="uid://b1d48jr23q0of" path="res://entities/weapons/prototype_gun/gun.tscn" id="2_xg74u"]
+
 
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iof21"]
