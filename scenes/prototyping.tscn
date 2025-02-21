@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://baqenyqh6exey" path="res://entities/harmful_objects/spike/spike.tscn" id="3_0obf7"]
 [ext_resource type="Texture2D" uid="uid://b5qqb3qqv3a7k" path="res://assets/textures/prototyping/blue/blue_texture8_text.png" id="4_emfw0"]
 [ext_resource type="Texture2D" uid="uid://bomvmvxqhy60n" path="res://assets/textures/prototyping/purple/arrows/purple_texture9_right.png" id="5_cblfr"]
-[ext_resource type="Texture2D" uid="uid://b63lqky7ysc00" path="res://assets/textures/prototyping/green/green_texture1_text.png" id="6_5j1xi"]
+[ext_resource type="Texture2D" uid="uid://brswkefqvnfay" path="res://assets/textures/prototyping/dark/dark_texture7_text.png" id="6_skudf"]
 
 [sub_resource type="GDScript" id="GDScript_ds6o3"]
 script/source = "extends Node3D
@@ -36,16 +36,19 @@ glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0rfyi"]
 albedo_texture = ExtResource("1_n31nt")
-uv1_scale = Vector3(4, 4, 4)
+uv1_scale = Vector3(60.005, 60.005, 60.005)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tcmal"]
 albedo_texture = ExtResource("4_emfw0")
+uv1_scale = Vector3(2, 2, 2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g1tc2"]
 albedo_texture = ExtResource("5_cblfr")
+uv1_scale = Vector3(2, 2, 2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f1mva"]
-albedo_texture = ExtResource("6_5j1xi")
+albedo_texture = ExtResource("6_skudf")
+uv1_scale = Vector3(-8.06, -8.06, -8.06)
 
 [node name="NewPlayerControllerTest" type="Node3D"]
 script = SubResource("GDScript_ds6o3")
@@ -93,7 +96,7 @@ size = Vector3(1000, 0.737, 1000)
 material = SubResource("StandardMaterial3D_0rfyi")
 
 [node name="Player" parent="." instance=ExtResource("2_8q5n0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.35423, 0.00648355, -30.4925)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 5.82032, 0.00648355, -27.2568)
 RUNNING_SPEED = 8.0
 inventory = null
 

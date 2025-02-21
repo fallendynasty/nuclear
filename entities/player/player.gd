@@ -26,6 +26,7 @@ var bullet_instance: Node3D
 @export var CAMERA_CONTROLLER: Camera3D
 @export var healthbar: ProgressBar  # $CameraController/Camera3D/HealthBar
 
+# TODO remove, replace with weapon_manager.gd
 @onready var gun_barrel_raycast: RayCast3D = $CameraController/Camera3D/Gun/RayCast3D
 
 @export_group("Player Inputs")
@@ -69,13 +70,17 @@ func _ready():
 	# Get mouse input
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
+func attack():
+	bullet_instance = bullet.instantiate()
+	bullet_instance.position = gun_barrel_raycast.global_position
+	bullet_instance.transform.basis = gun_barrel_raycast.global_transform.basis # get new matrix basis based on orientation of barrel
+	get_parent().add_child(bullet_instance) # get_parent() should return the map
+
 func _physics_process(delta):
 	if Input.is_action_pressed("shoot"):
-		bullet_instance = bullet.instantiate()
-		bullet_instance.position = gun_barrel_raycast.global_position
-		bullet_instance.transform.basis = gun_barrel_raycast.global_transform.basis # get new matrix basis based on orientation of barrel
-		get_parent().add_child(bullet_instance) # get_parent() should return the map
-		
+		# attack()
+		pass
+
 	# Update camera movement based on mouse movement
 	_update_camera(delta)
 	

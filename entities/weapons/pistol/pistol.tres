@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=3 format=3 uid="uid://b4lwa6ix4cuiy"]
+
+[ext_resource type="Script" path="res://entities/weapons/weapon_resource.gd" id="1_1dndh"]
+[ext_resource type="PackedScene" uid="uid://yjqsyvyhhbl6" path="res://entities/weapons/pistol/pistol.tscn" id="1_xoery"]
+
+[resource]
+script = ExtResource("1_1dndh")
+name = &"Pistol"
+position = Vector3(0.435, -0.3, -0.75)
+rotation = Vector3(0, 0, 0)
+model = ExtResource("1_xoery")
+damage_per_shot = 10.0
