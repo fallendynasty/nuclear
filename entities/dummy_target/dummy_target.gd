@@ -5,6 +5,7 @@ class_name DummyTarget extends RigidBody3D
 
 func _ready() -> void:
 	label.text = str(health) + "HP"
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 
 func take_damage(damage: float) -> void:
 	health -= damage

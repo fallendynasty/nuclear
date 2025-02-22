@@ -19,6 +19,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 [node name="RigidBody3D" type="RigidBody3D" parent="." node_paths=PackedStringArray("label")]
 script = ExtResource("1_0cjr6")
 label = NodePath("Label3D")
+health = 10000.0
 
 [node name="Label3D" type="Label3D" parent="RigidBody3D"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.5, 0)

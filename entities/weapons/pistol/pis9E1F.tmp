@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://yjqsyvyhhbl6"]
+
+[ext_resource type="PackedScene" uid="uid://c6bjfibscov1n" path="res://entities/weapons/pistol/pistol.glb" id="1_dw2tu"]
+[ext_resource type="Script" path="res://entities/weapons/pistol/pistol_model.gd" id="2_c2p5e"]
+[ext_resource type="ArrayMesh" uid="uid://eyer0xvqyjup" path="res://entities/weapons/pistol/pistol.res" id="2_vhdaf"]
+
+[node name="Pistol" instance=ExtResource("1_dw2tu")]
+script = ExtResource("2_c2p5e")
+
+[node name="Pistol_Compact_West" parent="Pistol_Compact_West_Rig/Skeleton3D" index="0"]
+mesh = ExtResource("2_vhdaf")

@@ -12,9 +12,6 @@ class_name Player extends CharacterBody3D
 @export_subgroup("Variable")
 @export var health = 100
 
-var bullet: Resource = load("res://entities/weapons/prototype_gun/bullet.tscn")
-var bullet_instance: Node3D
-
 @export_group("Player Misc")
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
 @export var TILT_UPPER_LIMIT := deg_to_rad(90.0)
@@ -25,9 +22,7 @@ var bullet_instance: Node3D
 @export var inventory: Inventory
 @export var CAMERA_CONTROLLER: Camera3D
 @export var healthbar: ProgressBar  # $CameraController/Camera3D/HealthBar
-
-# TODO remove, replace with weapon_manager.gd
-@onready var gun_barrel_raycast: RayCast3D = $CameraController/Camera3D/Gun/RayCast3D
+@export var equip_item_range_raycast: RayCast3D
 
 @export_group("Player Inputs")
 @export var INPUT_LEFT: String = "left"
@@ -37,6 +32,9 @@ var bullet_instance: Node3D
 @export var INPUT_JUMP: String = "jump"
 @export var INPUT_SPRINT: String = "sprint"
 @export var INPUT_SLIDE: String = "slide"
+@export var INPUT_ATTACK: String = "attack"
+@export var INPUT_INTERACT: String = "interact"
+@export var INPUT_INVENTORY: String = "open_inventory"
 @export var INPUT_DEBUG_RESET_POSITION: String = "debug_reset_position"
 
 # for debugging
@@ -70,20 +68,14 @@ func _ready():
 	# Get mouse input
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
-func attack():
-	bullet_instance = bullet.instantiate()
-	bullet_instance.position = gun_barrel_raycast.global_position
-	bullet_instance.transform.basis = gun_barrel_raycast.global_transform.basis # get new matrix basis based on orientation of barrel
-	get_parent().add_child(bullet_instance) # get_parent() should return the map
-
 func _physics_process(delta):
-	if Input.is_action_pressed("shoot"):
+	if Input.is_action_pressed(INPUT_ATTACK):
 		# attack()
 		pass
 
 	# Update camera movement based on mouse movement
 	_update_camera(delta)
-	
+
 func _update_camera(delta):
 	# Rotates camera using euler rotation
 	_mouse_rotation.x += _tilt_input * delta
