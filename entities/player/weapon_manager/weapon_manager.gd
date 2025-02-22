@@ -90,5 +90,6 @@ func scan_for_new_weapons() -> void:
 	if Input.is_action_just_pressed(player.INPUT_INTERACT):
 		new_weapon_model.free_label()
 		new_weapon_model.get_parent().remove_child(new_weapon_model)
+		new_weapon_model.disable_collision()
 		var idx = equip(new_weapon_model)
 		swap_to(idx)

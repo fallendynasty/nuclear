@@ -27,3 +27,9 @@ func add_label(text: String) -> void:
 func free_label() -> void:
 	if _label != null:
 		_label.queue_free()
+
+func disable_collision() -> void:
+	var collision_shape: CollisionShape3D = find_child("CollisionShape3D")
+	if collision_shape == null:
+		return
+	collision_shape.disabled = true
