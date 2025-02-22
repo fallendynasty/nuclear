@@ -144,9 +144,6 @@ value = 100.0
 
 [node name="WeaponContainer" type="Node3D" parent="CameraController/Camera3D"]
 
-[node name="BulletRayCast3D" type="RayCast3D" parent="CameraController/Camera3D/WeaponContainer"]
-target_position = Vector3(0, 0, -999)
-
 [node name="InventoryUI" parent="." instance=ExtResource("5_5usyw")]
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "player", "animation_player")]
@@ -173,10 +170,9 @@ script = ExtResource("8_76m28")
 [node name="WallJumpingState" type="Node" parent="StateMachine"]
 script = ExtResource("12_kj5uc")
 
-[node name="WeaponManager" type="Node" parent="." node_paths=PackedStringArray("player", "bullet_raycast", "weapon_container")]
+[node name="WeaponManager" type="Node" parent="." node_paths=PackedStringArray("player", "weapon_container")]
 script = ExtResource("13_4oicu")
 player = NodePath("..")
-bullet_raycast = NodePath("../CameraController/Camera3D/WeaponContainer/BulletRayCast3D")
 weapon_container = NodePath("../CameraController/Camera3D/WeaponContainer")
 current_weapon = ExtResource("13_o77xv")
 

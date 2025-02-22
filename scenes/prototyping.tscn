@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://5nwe6bxvb1ak"]
+[gd_scene load_steps=16 format=3 uid="uid://5nwe6bxvb1ak"]
 
 [ext_resource type="Texture2D" uid="uid://bto6mfjkcw8ky" path="res://assets/textures/prototyping/dark/dark_texture4_text.png" id="1_n31nt"]
 [ext_resource type="PackedScene" uid="uid://bpj8ln6w4yv72" path="res://entities/player/player.tscn" id="2_8q5n0"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b5qqb3qqv3a7k" path="res://assets/textures/prototyping/blue/blue_texture8_text.png" id="4_emfw0"]
 [ext_resource type="Texture2D" uid="uid://bomvmvxqhy60n" path="res://assets/textures/prototyping/purple/arrows/purple_texture9_right.png" id="5_cblfr"]
 [ext_resource type="Texture2D" uid="uid://brswkefqvnfay" path="res://assets/textures/prototyping/dark/dark_texture7_text.png" id="6_skudf"]
+[ext_resource type="PackedScene" uid="uid://qmyw62h2ql3b" path="res://entities/dummy_target/dummy_target.tscn" id="7_eke45"]
 
 [sub_resource type="GDScript" id="GDScript_ds6o3"]
 script/source = "extends Node3D
@@ -161,3 +162,6 @@ transform = Transform3D(-9.25467e-07, 0, 0.298916, 0, 9.501, 0, -21.1722, 0, -1.
 use_collision = true
 size = Vector3(1.06735, 1.31406, 1)
 material = SubResource("StandardMaterial3D_f1mva")
+
+[node name="DummyTarget" parent="." instance=ExtResource("7_eke45")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.944851, 1, -19.939)
