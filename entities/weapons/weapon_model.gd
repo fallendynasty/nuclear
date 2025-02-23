@@ -28,8 +28,8 @@ func free_label() -> void:
 	if _label != null:
 		_label.queue_free()
 
-func disable_collision() -> void:
+func set_collision_disabled(is_disabled: bool) -> void:
 	var collision_shape: CollisionShape3D = find_child("CollisionShape3D")
 	if collision_shape == null:
 		return
-	collision_shape.disabled = true
+	collision_shape.disabled = is_disabled

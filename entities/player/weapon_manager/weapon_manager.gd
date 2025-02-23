@@ -21,6 +21,10 @@ func _ready() -> void:
 		swap_to(0)
 
 func attack() -> void:
+	var weapon := get_current_weapon_model()
+	if weapon == null:
+		return
+	# TODO change based on weapon type, e.g. shotgun, sniper, melee, etc.
 	var collider: Node3D = bullet_raycast.get_collider()
 	if collider == null:
 		return
@@ -33,6 +37,22 @@ func reload() -> void:
 
 ## drop current weapon
 func drop() -> void:
+	if current_weapon_idx >= weapon_models.size() or current_weapon_idx < 0:
+		return
+	if is_weapon_slots_full():
+		empty_slot_idx = current_weapon_idx
+	var weapon := get_current_weapon_model()
+	if weapon == null:
+		return
+	weapon_container.remove_child(weapon)
+	#var rigidbody := RigidBody3D.new()
+	#rigidbody.add_child(weapon)
+	#rigidbody.mass = wepaon.mass
+	#rigidbody.apply_force(player.CAMERA_CONTROLLER.project_ray_normal(Vector2.ZERO), weapon.position)
+	player.get_parent().add_child(weapon)
+	weapon.position = weapon_container.global_position
+	weapon.set_collision_disabled(false)
+	weapon_models[current_weapon_idx] = null
 	# ...
 	pass
 
@@ -65,6 +85,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed(player.INPUT_ATTACK):
 		attack()
 	scan_for_new_weapons()
+	if Input.is_action_just_pressed("drop_item"):
+		drop()
 
 var __prev_weapon_found: WeaponModel = null
 
@@ -90,6 +112,6 @@ func scan_for_new_weapons() -> void:
 	if Input.is_action_just_pressed(player.INPUT_INTERACT):
 		new_weapon_model.free_label()
 		new_weapon_model.get_parent().remove_child(new_weapon_model)
-		new_weapon_model.disable_collision()
+		new_weapon_model.set_collision_disabled(true)
 		var idx = equip(new_weapon_model)
 		swap_to(idx)

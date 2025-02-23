@@ -15,8 +15,8 @@ weapon_resource = ExtResource("3_5ssyn")
 [node name="Pistol_Compact_West" parent="Pistol_Compact_West_Rig/Skeleton3D" index="0"]
 mesh = ExtResource("2_vhdaf")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." index="1"]
+[node name="Area3D" type="Area3D" parent="." index="1"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0790144, -0.0647506)
 shape = SubResource("BoxShape3D_avxfs")
