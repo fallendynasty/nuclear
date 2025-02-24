@@ -3,6 +3,7 @@ class_name WeaponManager extends Node
 @export var player: Player
 @export var weapon_container: Node3D
 @export var bullet_raycast: RayCast3D
+@export var THROW_FORCE: float = 10.0
 #@export var starting_weapon: WeaponResource
 var weapon_models: Array[WeaponModel] = [null, null]
 var current_weapon_idx: int = 0
@@ -51,10 +52,9 @@ func drop() -> void:
 	var weapon := get_current_weapon_model()
 	if weapon == null:
 		return
-	weapon_container.remove_child(weapon)
-	player.get_parent().add_child(weapon)
-	weapon.position = weapon_container.global_position
-	weapon.on_drop()
+	weapon.reparent(player.get_parent())
+	#weapon.on_drop()
+	weapon.dropped.emit(-player.basis.z * THROW_FORCE + player.velocity)
 	weapon_models[current_weapon_idx] = null
 	empty_slot_idx = find_new_empty_slot()
 
@@ -70,7 +70,8 @@ func pickup(new_weapon: WeaponModel) -> int:
 	var new_weapon_parent := new_weapon.get_parent()
 	if new_weapon_parent != null:
 		new_weapon.get_parent().remove_child(new_weapon)
-	new_weapon.on_pickup()
+	#new_weapon.on_pickup()
+	new_weapon.picked_up.emit()
 	weapon_models[empty_slot_idx] = new_weapon
 	var idx = empty_slot_idx
 	empty_slot_idx = find_new_empty_slot()
@@ -96,30 +97,24 @@ func swap_to(idx: int) -> void:
 	else:
 		empty_slot_idx = idx
 
-func _unhandled_input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed(player.INPUT_ATTACK):
-		attack()
-	scan_for_new_weapons()
-	if Input.is_action_just_pressed("drop_item"):
-		drop()
-	elif Input.is_action_just_pressed("weapon_1"):
-		swap_to(0)
-	elif Input.is_action_just_pressed("weapon_2"):
-		swap_to(1)
-	prints(weapon_models, current_weapon_idx, empty_slot_idx)
-
 var __prev_weapon_found: WeaponModel = null
 
 func scan_for_new_weapons() -> void:
 	if not player.equip_item_range_raycast.is_colliding():
+		# update label when out of pickup range
 		if __prev_weapon_found != null:
 			__prev_weapon_found.label.text = ""
 			__prev_weapon_found = null
 		print("not colliding")
 		return
+
 	var collider: Node3D = player.equip_item_range_raycast.get_collider()
 	print("Collider: ", collider)
 	if collider == null or not collider is WeaponModel:
+		# update label when out of pickup range
+		if __prev_weapon_found != null:
+			__prev_weapon_found.label.text = ""
+			__prev_weapon_found = null
 		return
 
 	var new_weapon_model: WeaponModel = collider
@@ -132,3 +127,15 @@ func scan_for_new_weapons() -> void:
 			swap_to(idx)
 		else:
 			print("unable to equip ", new_weapon_model, " (weapon slots full)")
+
+func _unhandled_input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed(player.INPUT_ATTACK):
+		attack()
+	scan_for_new_weapons()
+	if Input.is_action_just_pressed("drop_item"):
+		drop()
+	elif Input.is_action_just_pressed("weapon_1"):
+		swap_to(0)
+	elif Input.is_action_just_pressed("weapon_2"):
+		swap_to(1)
+	prints(weapon_models, current_weapon_idx, empty_slot_idx)

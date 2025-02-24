@@ -78,9 +78,9 @@ radius = 1.30207
 radial_segments = 24
 
 [node name="floor" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.78724, 0)
 use_collision = true
-size = Vector3(1000, 0.737, 1000)
+size = Vector3(1000, 11.3115, 1000)
 material = SubResource("StandardMaterial3D_0rfyi")
 
 [node name="Player" parent="." instance=ExtResource("2_8q5n0")]
