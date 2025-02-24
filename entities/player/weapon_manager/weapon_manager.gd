@@ -3,9 +3,9 @@ class_name WeaponManager extends Node
 @export var player: Player
 @export var weapon_container: Node3D
 @export var bullet_raycast: RayCast3D
-@export var __starting_weapon: PackedScene
+#@export var starting_weapon: WeaponResource
 var weapon_models: Array[WeaponModel] = [null, null]
-var current_weapon_idx: int = -1
+var current_weapon_idx: int = 0
 var empty_slot_idx: int = 0
 
 func get_current_weapon_model() -> WeaponModel:
@@ -15,10 +15,17 @@ func get_current_weapon_model() -> WeaponModel:
 	return weapon_models[current_weapon_idx]
 
 func _ready() -> void:
-	if __starting_weapon != null:
-		var starting_weapon = __starting_weapon.instantiate()
-		equip(starting_weapon)
-		swap_to(0)
+	var starting_weapons: Array = weapon_container.get_children().filter(func(node): return node is WeaponModel)
+	print("starting weapons: ", starting_weapons)
+	if starting_weapons.is_empty():
+		return
+
+	var i := 0
+	while i < weapon_models.size() and i < starting_weapons.size():
+		#weapon_models[i] = starting_weapons[i]
+		pickup(starting_weapons[i])
+		i += 1
+	swap_to(0)
 
 func attack() -> void:
 	var weapon := get_current_weapon_model()
@@ -45,32 +52,29 @@ func drop() -> void:
 	if weapon == null:
 		return
 	weapon_container.remove_child(weapon)
-	#var rigidbody := RigidBody3D.new()
-	#rigidbody.add_child(weapon)
-	#rigidbody.mass = wepaon.mass
-	#rigidbody.apply_force(player.CAMERA_CONTROLLER.project_ray_normal(Vector2.ZERO), weapon.position)
 	player.get_parent().add_child(weapon)
 	weapon.position = weapon_container.global_position
-	weapon.set_collision_disabled(false)
+	weapon.on_drop()
 	weapon_models[current_weapon_idx] = null
 	empty_slot_idx = find_new_empty_slot()
-	# ...
-	pass
 
 func is_weapon_slots_full() -> bool:
 	return empty_slot_idx >= weapon_models.size() or empty_slot_idx < 0
 
-## equip new weapon
-func equip(new_weapon: WeaponModel) -> int:
+## pickup new weapon
+func pickup(new_weapon: WeaponModel) -> int:
 	if is_weapon_slots_full():
 		print("weapon slots full")
 		return -1
-	new_weapon.reset_position_rotation()
+	# remove weapon_model from world
+	var new_weapon_parent := new_weapon.get_parent()
+	if new_weapon_parent != null:
+		new_weapon.get_parent().remove_child(new_weapon)
+	new_weapon.on_pickup()
 	weapon_models[empty_slot_idx] = new_weapon
-	#if empty_slot_idx == current_weapon_idx:
-		#weapon_container.add_child(new_weapon)
 	var idx = empty_slot_idx
 	empty_slot_idx = find_new_empty_slot()
+	prints("pickup done: ", weapon_models, current_weapon_idx, empty_slot_idx)
 	return idx
 
 func find_new_empty_slot() -> int:
@@ -109,29 +113,22 @@ var __prev_weapon_found: WeaponModel = null
 func scan_for_new_weapons() -> void:
 	if not player.equip_item_range_raycast.is_colliding():
 		if __prev_weapon_found != null:
-			__prev_weapon_found.free_label()
+			__prev_weapon_found.label.text = ""
 			__prev_weapon_found = null
 		print("not colliding")
 		return
 	var collider: Node3D = player.equip_item_range_raycast.get_collider()
 	print("Collider: ", collider)
-	if collider == null:
+	if collider == null or not collider is WeaponModel:
 		return
-	var parent: Node3D = collider.get_parent()
-	if parent == null or not (parent is WeaponModel):
-		return
-	
-	var new_weapon_model: WeaponModel = parent
-	print("Found weapon: ", new_weapon_model)
-	__prev_weapon_found = new_weapon_model
-	new_weapon_model.add_label(str(InputMap.action_get_events(player.INPUT_INTERACT)[0].as_text()) + " equip")
+
+	var new_weapon_model: WeaponModel = collider
+	__prev_weapon_found = collider
+
+	new_weapon_model.label.text = "[%s] Equip %s" % [str(InputMap.action_get_events(player.INPUT_INTERACT)[0].as_text()), new_weapon_model.weapon_name]
 	if Input.is_action_just_pressed(player.INPUT_INTERACT):
-		var idx = equip(new_weapon_model)
+		var idx = pickup(new_weapon_model)
 		if idx != -1:
-			new_weapon_model.free_label()
-			new_weapon_model.get_parent().remove_child(new_weapon_model)
-			new_weapon_model.set_collision_disabled(true)
 			swap_to(idx)
 		else:
 			print("unable to equip ", new_weapon_model, " (weapon slots full)")
-		

@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cydqomi6hfvqr"]
+
+[ext_resource type="Script" path="res://entities/weapons/weapon_model.gd" id="1_nwg8a"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sangt"]
+
+[node name="WeaponModel" type="RigidBody3D" node_paths=PackedStringArray("label", "collision_shape")]
+script = ExtResource("1_nwg8a")
+label = NodePath("Label3D")
+collision_shape = NodePath("CollisionShape3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_sangt")
+
+[node name="Label3D" type="Label3D" parent="."]

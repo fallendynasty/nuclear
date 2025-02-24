@@ -1,15 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://f3bl63mboiak"]
+[gd_scene load_steps=3 format=3 uid="uid://f3bl63mboiak"]
 
 [ext_resource type="PackedScene" uid="uid://c8b5ok5cgl1cs" path="res://entities/weapons/shotgun/Shotgun_Pump_West.glb" id="1_ow1mm"]
-[ext_resource type="Script" path="res://entities/weapons/weapon_model.gd" id="2_a58ii"]
-[ext_resource type="Resource" uid="uid://owrb7xt82e0e" path="res://entities/weapons/shotgun/shotgun.tres" id="3_obnwl"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5hpub"]
 size = Vector3(0.08, 0.2, 0.6)
 
 [node name="Shotgun" instance=ExtResource("1_ow1mm")]
-script = ExtResource("2_a58ii")
-weapon_resource = ExtResource("3_obnwl")
 
 [node name="Area3D" type="Area3D" parent="." index="1"]
 

@@ -1,6 +1,9 @@
 class_name WeaponResource extends Resource
 
-# TODO weapon types, e.g. shotgun, sniper, melee, etc.
+# TODO 
+# - weapon types, e.g. shotgun, sniper, melee, etc.
+# - ammo types (?)
+# - misc stuff e.g. mass
 
 @export var name: StringName
 
@@ -8,8 +11,13 @@ class_name WeaponResource extends Resource
 @export var position: Vector3
 @export var rotation: Vector3
 
+@export_category("Weapon Collision")
+@export var collision_size: Vector3
+@export var collision_position: Vector3
+@export var collision_rotation: Vector3
+
 #@export_category("Visual Settings")
-#@export var model: PackedScene
+@export var model: PackedScene
  #@export var mesh: Mesh
 
 @export_category("Weapon Stats")

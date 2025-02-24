@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://5nwe6bxvb1ak"]
+[gd_scene load_steps=17 format=3 uid="uid://5nwe6bxvb1ak"]
 
 [ext_resource type="Texture2D" uid="uid://bto6mfjkcw8ky" path="res://assets/textures/prototyping/dark/dark_texture4_text.png" id="1_n31nt"]
 [ext_resource type="PackedScene" uid="uid://bpj8ln6w4yv72" path="res://entities/player/player.tscn" id="2_8q5n0"]
@@ -7,22 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://bomvmvxqhy60n" path="res://assets/textures/prototyping/purple/arrows/purple_texture9_right.png" id="5_cblfr"]
 [ext_resource type="Texture2D" uid="uid://brswkefqvnfay" path="res://assets/textures/prototyping/dark/dark_texture7_text.png" id="6_skudf"]
 [ext_resource type="PackedScene" uid="uid://qmyw62h2ql3b" path="res://entities/dummy_target/dummy_target.tscn" id="7_eke45"]
-[ext_resource type="PackedScene" uid="uid://yjqsyvyhhbl6" path="res://entities/weapons/pistol/pistol.tscn" id="8_oon4q"]
-[ext_resource type="PackedScene" uid="uid://f3bl63mboiak" path="res://entities/weapons/shotgun/shotgun.tscn" id="9_yirul"]
-
-[sub_resource type="GDScript" id="GDScript_ds6o3"]
-script/source = "extends Node3D
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-"
+[ext_resource type="PackedScene" uid="uid://cydqomi6hfvqr" path="res://entities/weapons/weapon_model.tscn" id="8_mhttq"]
+[ext_resource type="Resource" uid="uid://owrb7xt82e0e" path="res://entities/weapons/shotgun/shotgun.tres" id="9_gmkjt"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_p6ibe"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -54,7 +40,6 @@ albedo_texture = ExtResource("6_skudf")
 uv1_scale = Vector3(-8.06, -8.06, -8.06)
 
 [node name="NewPlayerControllerTest" type="Node3D"]
-script = SubResource("GDScript_ds6o3")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_s71qb")
@@ -168,8 +153,7 @@ material = SubResource("StandardMaterial3D_f1mva")
 [node name="DummyTarget" parent="." instance=ExtResource("7_eke45")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.944851, 1, -19.939)
 
-[node name="Pistol" parent="." instance=ExtResource("8_oon4q")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.80619, 1.64479, -29.9921)
-
-[node name="Shotgun" parent="." instance=ExtResource("9_yirul")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.28706, 1.74739, -30.2864)
+[node name="WeaponModel" parent="." node_paths=PackedStringArray("player") instance=ExtResource("8_mhttq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.92402, 1.59592, -29.4497)
+weapon_resource = ExtResource("9_gmkjt")
+player = NodePath("../Player")

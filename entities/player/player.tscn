@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bpj8ln6w4yv72"]
+[gd_scene load_steps=24 format=3 uid="uid://bpj8ln6w4yv72"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_njpdr"]
 [ext_resource type="Script" path="res://entities/player/state_machine/state_machine.gd" id="1_qshaj"]
@@ -7,7 +7,9 @@
 [ext_resource type="Script" path="res://entities/ui/inventory/inventory.gd" id="3_eq6b2"]
 [ext_resource type="Script" path="res://entities/player/state_machine/states/running_state.gd" id="3_hwf20"]
 [ext_resource type="Script" path="res://entities/player/state_machine/states/jumping_state.gd" id="4_3bpqg"]
+[ext_resource type="PackedScene" uid="uid://cydqomi6hfvqr" path="res://entities/weapons/weapon_model.tscn" id="4_l3mvl"]
 [ext_resource type="PackedScene" uid="uid://c8nab30aeos38" path="res://entities/ui/inventory/inventory_ui.tscn" id="5_5usyw"]
+[ext_resource type="Resource" uid="uid://b4lwa6ix4cuiy" path="res://entities/weapons/pistol/pistol.tres" id="5_bd32c"]
 [ext_resource type="Script" path="res://entities/player/state_machine/states/falling_state.gd" id="5_cygei"]
 [ext_resource type="Script" path="res://entities/player/state_machine/states/sliding_state.gd" id="8_76m28"]
 [ext_resource type="Script" path="res://entities/player/state_machine/states/wall_jumping_state.gd" id="12_kj5uc"]
@@ -143,6 +145,10 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_idcgq")
 value = 100.0
 
 [node name="WeaponContainer" type="Node3D" parent="CameraController/Camera3D"]
+
+[node name="WeaponModel" parent="CameraController/Camera3D/WeaponContainer" node_paths=PackedStringArray("player") instance=ExtResource("4_l3mvl")]
+weapon_resource = ExtResource("5_bd32c")
+player = NodePath("../../../..")
 
 [node name="BulletRayCast3D" type="RayCast3D" parent="CameraController/Camera3D/WeaponContainer"]
 target_position = Vector3(0, 0, -1000)
