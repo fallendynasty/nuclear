@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="WeaponResource" load_steps=3 format=3 uid="uid://owrb7xt82e0e"]
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=2 format=3 uid="uid://owrb7xt82e0e"]
 
 [ext_resource type="Script" path="res://entities/weapons/weapon_resource.gd" id="1_5gssy"]
-[ext_resource type="PackedScene" uid="uid://f3bl63mboiak" path="res://entities/weapons/shotgun/shotgun.tscn" id="1_31mky"]
 
 [resource]
 script = ExtResource("1_5gssy")
 name = &"Shotgun"
 position = Vector3(0.55, -0.333, -0.75)
 rotation = Vector3(0, 0, 0)
-model = ExtResource("1_31mky")
 damage_per_shot = 0.0
+ammo_per_magazine = 0
+magazine_count = 0
+gunshot_duration = 0.0
+is_automatic = false

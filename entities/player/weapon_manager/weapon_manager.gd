@@ -4,7 +4,7 @@ class_name WeaponManager extends Node
 @export var weapon_container: Node3D
 @export var bullet_raycast: RayCast3D
 @export var __starting_weapon: PackedScene
-var weapon_models: Array[WeaponModel] = [null, null, null]
+var weapon_models: Array[WeaponModel] = [null, null]
 var current_weapon_idx: int = -1
 var empty_slot_idx: int = 0
 
@@ -53,6 +53,7 @@ func drop() -> void:
 	weapon.position = weapon_container.global_position
 	weapon.set_collision_disabled(false)
 	weapon_models[current_weapon_idx] = null
+	empty_slot_idx = find_new_empty_slot()
 	# ...
 	pass
 
@@ -62,12 +63,18 @@ func is_weapon_slots_full() -> bool:
 ## equip new weapon
 func equip(new_weapon: WeaponModel) -> int:
 	if is_weapon_slots_full():
+		print("weapon slots full")
 		return -1
 	new_weapon.reset_position_rotation()
 	weapon_models[empty_slot_idx] = new_weapon
+	#if empty_slot_idx == current_weapon_idx:
+		#weapon_container.add_child(new_weapon)
 	var idx = empty_slot_idx
-	empty_slot_idx += 1
+	empty_slot_idx = find_new_empty_slot()
 	return idx
+
+func find_new_empty_slot() -> int:
+	return weapon_models.find(null)
 
 ## swap to another equipped weapon
 func swap_to(idx: int) -> void:
@@ -75,11 +82,15 @@ func swap_to(idx: int) -> void:
 	if idx >= weapon_models.size() or idx < 0:
 		return
 	var current_weapon := get_current_weapon_model()
-	if current_weapon != null:
-		print("remove ", get_current_weapon_model())
-		weapon_container.remove_child(get_current_weapon_model())
+	if current_weapon != null and weapon_container.is_ancestor_of(current_weapon):
+		print("swap_to(): remove child ", current_weapon)
+		weapon_container.remove_child(current_weapon)
 	current_weapon_idx = idx
-	weapon_container.add_child(get_current_weapon_model())
+	current_weapon = get_current_weapon_model()
+	if current_weapon != null:
+		weapon_container.add_child(get_current_weapon_model())
+	else:
+		empty_slot_idx = idx
 
 func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed(player.INPUT_ATTACK):
@@ -87,6 +98,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	scan_for_new_weapons()
 	if Input.is_action_just_pressed("drop_item"):
 		drop()
+	elif Input.is_action_just_pressed("weapon_1"):
+		swap_to(0)
+	elif Input.is_action_just_pressed("weapon_2"):
+		swap_to(1)
+	prints(weapon_models, current_weapon_idx, empty_slot_idx)
 
 var __prev_weapon_found: WeaponModel = null
 
@@ -110,8 +126,12 @@ func scan_for_new_weapons() -> void:
 	__prev_weapon_found = new_weapon_model
 	new_weapon_model.add_label(str(InputMap.action_get_events(player.INPUT_INTERACT)[0].as_text()) + " equip")
 	if Input.is_action_just_pressed(player.INPUT_INTERACT):
-		new_weapon_model.free_label()
-		new_weapon_model.get_parent().remove_child(new_weapon_model)
-		new_weapon_model.set_collision_disabled(true)
 		var idx = equip(new_weapon_model)
-		swap_to(idx)
+		if idx != -1:
+			new_weapon_model.free_label()
+			new_weapon_model.get_parent().remove_child(new_weapon_model)
+			new_weapon_model.set_collision_disabled(true)
+			swap_to(idx)
+		else:
+			print("unable to equip ", new_weapon_model, " (weapon slots full)")
+		

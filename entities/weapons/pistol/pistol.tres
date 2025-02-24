@@ -8,3 +8,7 @@ name = &"Pistol"
 position = Vector3(0.435, -0.3, -0.75)
 rotation = Vector3(0, 0, 0)
 damage_per_shot = 10.0
+ammo_per_magazine = 0
+magazine_count = 0
+gunshot_duration = 0.0
+is_automatic = false
