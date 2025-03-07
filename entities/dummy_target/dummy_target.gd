@@ -1,4 +1,4 @@
-class_name DummyTarget extends RigidBody3D
+class_name DummyTarget extends StaticBody3D
 
 @export var label: Label3D
 @export var health: float = 100.0

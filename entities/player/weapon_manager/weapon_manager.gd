@@ -32,12 +32,17 @@ func attack() -> void:
 	var weapon := get_current_weapon_model()
 	if weapon == null:
 		return
-	# TODO change based on weapon type, e.g. shotgun, sniper, melee, etc.
-	var collider: Node3D = bullet_raycast.get_collider()
-	if collider == null:
-		return
-	if collider.has_method("take_damage"):
-		collider.take_damage(get_current_weapon_model().damage_per_shot)
+
+	var screen_center: Vector2 = player.get_viewport().size / 2
+	var origin: Vector3 = player.CAMERA_CONTROLLER.project_ray_origin(screen_center)
+	var look_direction: Vector3 = player.CAMERA_CONTROLLER.project_ray_normal(screen_center)
+	weapon.attacked.emit(origin, look_direction)
+	# # TODO change based on weapon type, e.g. shotgun, sniper, melee, etc.
+	# var collider: Node3D = bullet_raycast.get_collider()
+	# if collider == null:
+	# 	return
+	# if collider.has_method("take_damage"):
+	# 	collider.take_damage(get_current_weapon_model().damage_per_shot)
 
 func reload() -> void:
 	# ...

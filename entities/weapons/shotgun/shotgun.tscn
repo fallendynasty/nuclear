@@ -7,6 +7,11 @@ size = Vector3(0.08, 0.2, 0.6)
 
 [node name="Shotgun" instance=ExtResource("1_ow1mm")]
 
+[node name="Skeleton3D" parent="Shotgun_Pump_West_Rig" index="0"]
+bones/0/rotation = Quaternion(-0.707107, 8.40779e-17, 8.40779e-17, 0.707107)
+bones/3/rotation = Quaternion(-0.0409773, 4.87237e-18, 3.36724e-16, 0.99916)
+bones/3/scale = Vector3(1, 1, 1)
+
 [node name="Area3D" type="Area3D" parent="." index="1"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]

@@ -27,3 +27,7 @@ class_name WeaponResource extends Resource
 ## time in milliseconds before player can shoot again
 @export var gunshot_duration: float
 @export var is_automatic: bool
+
+@export_category("Weapon Behaviour")
+@export var bullets_per_shot: int = 1
+@export var spread: float = 0.0

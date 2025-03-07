@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://g1c0x173dxcy"]
+
+[ext_resource type="Script" path="res://entities/weapons/bullets/default_bullet_tracer/bullet_tracer.gd" id="1_2f5qf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0asqk"]
+albedo_color = Color(0.878431, 0.301961, 0, 1)
+emission_enabled = true
+emission = Color(0.878431, 0.301961, 0, 1)
+emission_energy_multiplier = 6.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_wcfdk"]
+material = SubResource("StandardMaterial3D_0asqk")
+radius = 0.05
+height = 0.5
+
+[node name="BulletTracer" type="Node3D"]
+script = ExtResource("1_2f5qf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_wcfdk")
