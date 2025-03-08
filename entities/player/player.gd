@@ -19,6 +19,7 @@ class_name Player extends CharacterBody3D
 
 # Set these references in the scene editor so that if the nodes are moved around, the value is automatically changed
 @export_group("Object References")
+@export var hud_ui: HeadsUpDisplayControl
 @export var inventory: Inventory
 @export var CAMERA_CONTROLLER: Camera3D
 @export var healthbar: ProgressBar  # $CameraController/Camera3D/HealthBar
@@ -33,6 +34,7 @@ class_name Player extends CharacterBody3D
 @export var INPUT_SPRINT: String = "sprint"
 @export var INPUT_SLIDE: String = "slide"
 @export var INPUT_ATTACK: String = "attack"
+@export var INPUT_RELOAD: String = "reload"
 @export var INPUT_INTERACT: String = "interact"
 @export var INPUT_INVENTORY: String = "open_inventory"
 @export var INPUT_DEBUG_RESET_POSITION: String = "debug_reset_position"
@@ -48,13 +50,18 @@ var _mouse_rotation: Vector3
 var _player_rotation: Vector3
 var _camera_rotation: Vector3
 
-func _unhandled_input(event: InputEvent) -> void:
+#func _unhandled_input(event: InputEvent) -> void:
+	#_mouse_input = event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
+	#if _mouse_input:
+		#_rotation_input = -event.relative.x * MOUSE_SENSITIVITY
+		#_tilt_input = -event.relative.y * MOUSE_SENSITIVITY
+						
+func _input(event):
 	_mouse_input = event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
 	if _mouse_input:
 		_rotation_input = -event.relative.x * MOUSE_SENSITIVITY
 		_tilt_input = -event.relative.y * MOUSE_SENSITIVITY
-						
-func _input(event):
+
 	if Input.is_key_pressed(KEY_ESCAPE):
 		get_tree().quit()
 	elif Input.is_action_just_pressed(INPUT_DEBUG_RESET_POSITION):

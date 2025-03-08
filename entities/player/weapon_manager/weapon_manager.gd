@@ -9,6 +9,12 @@ var weapon_models: Array[WeaponModel] = [null, null]
 var current_weapon_idx: int = 0
 var empty_slot_idx: int = 0
 
+signal dropped(weapon: WeaponModel)
+signal picked_up(weapon: WeaponModel)
+signal attacked(weapon: WeaponModel)
+signal reloaded(weapon: WeaponModel)
+signal swapped(weapon: WeaponModel)
+
 func get_current_weapon_model() -> WeaponModel:
 	# range check
 	if current_weapon_idx >= weapon_models.size() or current_weapon_idx < 0:
@@ -26,6 +32,11 @@ func _ready() -> void:
 		#weapon_models[i] = starting_weapons[i]
 		pickup(starting_weapons[i])
 		i += 1
+	dropped.connect(player.hud_ui.update_ammo_label)
+	picked_up.connect(player.hud_ui.update_ammo_label)
+	attacked.connect(player.hud_ui.update_ammo_label)
+	reloaded.connect(player.hud_ui.update_ammo_label)
+	swapped.connect(player.hud_ui.update_ammo_label)
 	swap_to(0)
 
 func attack() -> void:
@@ -36,7 +47,8 @@ func attack() -> void:
 	var screen_center: Vector2 = player.get_viewport().size / 2
 	var origin: Vector3 = player.CAMERA_CONTROLLER.project_ray_origin(screen_center)
 	var look_direction: Vector3 = player.CAMERA_CONTROLLER.project_ray_normal(screen_center)
-	weapon.attacked.emit(origin, look_direction)
+	weapon._on_attack(origin, look_direction)
+	attacked.emit(weapon)
 	# # TODO change based on weapon type, e.g. shotgun, sniper, melee, etc.
 	# var collider: Node3D = bullet_raycast.get_collider()
 	# if collider == null:
@@ -45,8 +57,13 @@ func attack() -> void:
 	# 	collider.take_damage(get_current_weapon_model().damage_per_shot)
 
 func reload() -> void:
+	var weapon := get_current_weapon_model()
+	if weapon == null:
+		return
+	
+	weapon._on_reload()
 	# ...
-	pass
+	reloaded.emit(get_current_weapon_model())
 
 ## drop current weapon
 func drop() -> void:
@@ -55,13 +72,15 @@ func drop() -> void:
 	if is_weapon_slots_full():
 		empty_slot_idx = current_weapon_idx
 	var weapon := get_current_weapon_model()
+	# not holding a weapon
 	if weapon == null:
 		return
+	# drop current weapon
 	weapon.reparent(player.get_parent())
-	#weapon.on_drop()
-	weapon.dropped.emit(-player.basis.z * THROW_FORCE + player.velocity)
+	weapon._on_drop(-player.basis.z * THROW_FORCE + player.velocity)
 	weapon_models[current_weapon_idx] = null
 	empty_slot_idx = find_new_empty_slot()
+	dropped.emit(null)
 
 func is_weapon_slots_full() -> bool:
 	return empty_slot_idx >= weapon_models.size() or empty_slot_idx < 0
@@ -75,12 +94,12 @@ func pickup(new_weapon: WeaponModel) -> int:
 	var new_weapon_parent := new_weapon.get_parent()
 	if new_weapon_parent != null:
 		new_weapon.get_parent().remove_child(new_weapon)
-	#new_weapon.on_pickup()
-	new_weapon.picked_up.emit()
+	new_weapon._on_pickup()
 	weapon_models[empty_slot_idx] = new_weapon
 	var idx = empty_slot_idx
 	empty_slot_idx = find_new_empty_slot()
 	prints("pickup done: ", weapon_models, current_weapon_idx, empty_slot_idx)
+	picked_up.emit(new_weapon)
 	return idx
 
 func find_new_empty_slot() -> int:
@@ -101,6 +120,7 @@ func swap_to(idx: int) -> void:
 		weapon_container.add_child(get_current_weapon_model())
 	else:
 		empty_slot_idx = idx
+	swapped.emit(current_weapon)
 
 var __prev_weapon_found: WeaponModel = null
 
@@ -133,9 +153,11 @@ func scan_for_new_weapons() -> void:
 		else:
 			print("unable to equip ", new_weapon_model, " (weapon slots full)")
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed(player.INPUT_ATTACK):
 		attack()
+	if Input.is_action_just_pressed(player.INPUT_RELOAD):
+		reload()
 	scan_for_new_weapons()
 	if Input.is_action_just_pressed("drop_item"):
 		drop()

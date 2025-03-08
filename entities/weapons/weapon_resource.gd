@@ -25,8 +25,9 @@ class_name WeaponResource extends Resource
 @export var ammo_per_magazine: int
 @export var magazine_count: int
 ## time in milliseconds before player can shoot again
-@export var gunshot_duration: float
+@export var gunshot_duration_ms: float
 @export var is_automatic: bool
+@export var reload_duration_ms: float
 
 @export_category("Weapon Behaviour")
 @export var bullets_per_shot: int = 1

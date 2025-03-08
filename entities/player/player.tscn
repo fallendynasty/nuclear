@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bpj8ln6w4yv72"]
+[gd_scene load_steps=25 format=3 uid="uid://bpj8ln6w4yv72"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_njpdr"]
 [ext_resource type="Script" path="res://entities/player/state_machine/state_machine.gd" id="1_qshaj"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://c8nab30aeos38" path="res://entities/ui/inventory/inventory_ui.tscn" id="5_5usyw"]
 [ext_resource type="Resource" uid="uid://b4lwa6ix4cuiy" path="res://entities/weapons/pistol/pistol.tres" id="5_bd32c"]
 [ext_resource type="Script" path="res://entities/player/state_machine/states/falling_state.gd" id="5_cygei"]
+[ext_resource type="Script" path="res://entities/ui/hud/hud_control.gd" id="7_5r4oy"]
 [ext_resource type="Script" path="res://entities/player/state_machine/states/sliding_state.gd" id="8_76m28"]
 [ext_resource type="Script" path="res://entities/player/state_machine/states/wall_jumping_state.gd" id="12_kj5uc"]
 [ext_resource type="Script" path="res://entities/player/weapon_manager/weapon_manager.gd" id="13_4oicu"]
@@ -116,13 +117,14 @@ _data = {
 "slide": SubResource("Animation_manu0")
 }
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER", "healthbar", "equip_item_range_raycast")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("hud_ui", "CAMERA_CONTROLLER", "healthbar", "equip_item_range_raycast")]
 script = ExtResource("1_njpdr")
 GRAVITY = 17.5
 MOUSE_SENSITIVITY = 0.06
+hud_ui = NodePath("CanvasLayer/HUDControl")
 inventory = SubResource("Resource_tsmg2")
 CAMERA_CONTROLLER = NodePath("CameraController/Camera3D")
-healthbar = NodePath("CameraController/Camera3D/HealthBar")
+healthbar = NodePath("CanvasLayer/HUDControl/HealthBar")
 equip_item_range_raycast = NodePath("CameraController/Camera3D/EquipItemRange/RayCast3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -136,13 +138,6 @@ mesh = SubResource("CapsuleMesh_qljoe")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraController"]
-
-[node name="HealthBar" type="ProgressBar" parent="CameraController/Camera3D"]
-offset_right = 344.0
-offset_bottom = 27.0
-theme_override_styles/background = SubResource("StyleBoxFlat_3l7j0")
-theme_override_styles/fill = SubResource("StyleBoxFlat_idcgq")
-value = 100.0
 
 [node name="WeaponContainer" type="Node3D" parent="CameraController/Camera3D"]
 
@@ -161,6 +156,35 @@ collide_with_areas = true
 
 [node name="InventoryUI" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_5usyw")]
 player = NodePath("..")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUDControl" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("ammo_label", "health_bar")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("7_5r4oy")
+ammo_label = NodePath("AmmoLabel")
+health_bar = NodePath("HealthBar")
+
+[node name="HealthBar" type="ProgressBar" parent="CanvasLayer/HUDControl"]
+layout_mode = 0
+offset_right = 344.0
+offset_bottom = 27.0
+theme_override_styles/background = SubResource("StyleBoxFlat_3l7j0")
+theme_override_styles/fill = SubResource("StyleBoxFlat_idcgq")
+value = 100.0
+
+[node name="AmmoLabel" type="Label" parent="CanvasLayer/HUDControl"]
+layout_mode = 0
+offset_left = 998.0
+offset_top = 575.0
+offset_right = 1134.0
+offset_bottom = 635.0
+text = "test"
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "player", "animation_player")]
 script = ExtResource("1_qshaj")
