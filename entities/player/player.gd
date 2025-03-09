@@ -76,10 +76,6 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _physics_process(delta):
-	if Input.is_action_pressed(INPUT_ATTACK):
-		# attack()
-		pass
-
 	# Update camera movement based on mouse movement
 	_update_camera(delta)
 
