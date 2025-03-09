@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=3 format=3 uid="uid://b4lwa6ix4cuiy"]
+
+[ext_resource type="Script" path="res://entities/weapons/weapon_resource.gd" id="1_1dndh"]
+[ext_resource type="PackedScene" uid="uid://yjqsyvyhhbl6" path="res://entities/weapons/pistol/pistol.tscn" id="1_6wuo8"]
+
+[resource]
+script = ExtResource("1_1dndh")
+name = &"Pistol"
+position = Vector3(0.435, -0.3, -0.75)
+rotation = Vector3(0, 0, 0)
+collision_size = Vector3(0.08, 0.42, 0.6)
+collision_position = Vector3(0, -0.0790144, -0.0647506)
+collision_rotation = Vector3(0, 0, 0)
+model = ExtResource("1_6wuo8")
+damage_per_shot = 10.0
+ammo_per_magazine = 12
+magazine_count = 4
+gunshot_duration_ms = 0.0
+is_automatic = false
+reload_duration_ms = 0.0
+bullets_per_shot = 1
+spread = 0.0

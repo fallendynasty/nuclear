@@ -1,0 +1,224 @@
+[gd_scene load_steps=25 format=3 uid="uid://bpj8ln6w4yv72"]
+
+[ext_resource type="Script" path="res://entities/player/player.gd" id="1_njpdr"]
+[ext_resource type="Script" path="res://entities/player/state_machine/state_machine.gd" id="1_qshaj"]
+[ext_resource type="Script" path="res://entities/items/item.gd" id="2_q4qm3"]
+[ext_resource type="Script" path="res://entities/player/state_machine/states/idle_state.gd" id="2_rtyuo"]
+[ext_resource type="Script" path="res://entities/ui/inventory/inventory.gd" id="3_eq6b2"]
+[ext_resource type="Script" path="res://entities/player/state_machine/states/running_state.gd" id="3_hwf20"]
+[ext_resource type="Script" path="res://entities/player/state_machine/states/jumping_state.gd" id="4_3bpqg"]
+[ext_resource type="PackedScene" uid="uid://cydqomi6hfvqr" path="res://entities/weapons/weapon_model.tscn" id="4_l3mvl"]
+[ext_resource type="PackedScene" uid="uid://c8nab30aeos38" path="res://entities/ui/inventory/inventory_ui.tscn" id="5_5usyw"]
+[ext_resource type="Resource" uid="uid://b4lwa6ix4cuiy" path="res://entities/weapons/pistol/pistol.tres" id="5_bd32c"]
+[ext_resource type="Script" path="res://entities/player/state_machine/states/falling_state.gd" id="5_cygei"]
+[ext_resource type="Script" path="res://entities/ui/hud/hud_control.gd" id="7_5r4oy"]
+[ext_resource type="Script" path="res://entities/player/state_machine/states/sliding_state.gd" id="8_76m28"]
+[ext_resource type="Script" path="res://entities/player/state_machine/states/wall_jumping_state.gd" id="12_kj5uc"]
+[ext_resource type="Script" path="res://entities/player/weapon_manager/weapon_manager.gd" id="13_4oicu"]
+
+[sub_resource type="Resource" id="Resource_tsmg2"]
+script = ExtResource("3_eq6b2")
+items = Array[ExtResource("2_q4qm3")]([])
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lryno"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w8wml"]
+albedo_color = Color(0.962597, 0.387652, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_qljoe"]
+material = SubResource("StandardMaterial3D_w8wml")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3l7j0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_idcgq"]
+
+[sub_resource type="Animation" id="Animation_ce0a0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:shape:height")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CameraController:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.5, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_manu0"]
+resource_name = "slide"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:shape:height")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.0, 1.5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.133333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 1, 0), Vector3(0, 0.75, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CameraController:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.133333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 1.5, 0), Vector3(0, 1.25, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a4ge6"]
+_data = {
+"RESET": SubResource("Animation_ce0a0"),
+"slide": SubResource("Animation_manu0")
+}
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("hud_ui", "CAMERA_CONTROLLER", "healthbar", "equip_item_range_raycast")]
+script = ExtResource("1_njpdr")
+GRAVITY = 17.5
+MOUSE_SENSITIVITY = 0.06
+hud_ui = NodePath("CanvasLayer/HUDControl")
+inventory = SubResource("Resource_tsmg2")
+CAMERA_CONTROLLER = NodePath("CameraController/Camera3D")
+healthbar = NodePath("CanvasLayer/HUDControl/HealthBar")
+equip_item_range_raycast = NodePath("CameraController/Camera3D/EquipItemRange/RayCast3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_lryno")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("CapsuleMesh_qljoe")
+
+[node name="CameraController" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraController"]
+
+[node name="WeaponContainer" type="Node3D" parent="CameraController/Camera3D"]
+
+[node name="WeaponModel" parent="CameraController/Camera3D/WeaponContainer" node_paths=PackedStringArray("player") instance=ExtResource("4_l3mvl")]
+weapon_resource = ExtResource("5_bd32c")
+player = NodePath("../../../..")
+
+[node name="BulletRayCast3D" type="RayCast3D" parent="CameraController/Camera3D/WeaponContainer"]
+target_position = Vector3(0, 0, -1000)
+
+[node name="EquipItemRange" type="Node3D" parent="CameraController/Camera3D"]
+
+[node name="RayCast3D" type="RayCast3D" parent="CameraController/Camera3D/EquipItemRange"]
+target_position = Vector3(0, 0, -2.5)
+collide_with_areas = true
+
+[node name="InventoryUI" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_5usyw")]
+player = NodePath("..")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUDControl" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("ammo_label", "health_bar")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("7_5r4oy")
+ammo_label = NodePath("AmmoLabel")
+health_bar = NodePath("HealthBar")
+
+[node name="HealthBar" type="ProgressBar" parent="CanvasLayer/HUDControl"]
+layout_mode = 0
+offset_right = 344.0
+offset_bottom = 27.0
+theme_override_styles/background = SubResource("StyleBoxFlat_3l7j0")
+theme_override_styles/fill = SubResource("StyleBoxFlat_idcgq")
+value = 100.0
+
+[node name="AmmoLabel" type="Label" parent="CanvasLayer/HUDControl"]
+layout_mode = 0
+offset_left = 998.0
+offset_top = 575.0
+offset_right = 1134.0
+offset_bottom = 635.0
+text = "test"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "player", "animation_player")]
+script = ExtResource("1_qshaj")
+initial_state = NodePath("IdleState")
+player = NodePath("..")
+animation_player = NodePath("../AnimationPlayer")
+
+[node name="IdleState" type="Node" parent="StateMachine"]
+script = ExtResource("2_rtyuo")
+
+[node name="RunningState" type="Node" parent="StateMachine"]
+script = ExtResource("3_hwf20")
+
+[node name="JumpingState" type="Node" parent="StateMachine"]
+script = ExtResource("4_3bpqg")
+
+[node name="FallingState" type="Node" parent="StateMachine"]
+script = ExtResource("5_cygei")
+
+[node name="SlidingState" type="Node" parent="StateMachine"]
+script = ExtResource("8_76m28")
+
+[node name="WallJumpingState" type="Node" parent="StateMachine"]
+script = ExtResource("12_kj5uc")
+
+[node name="WeaponManager" type="Node" parent="." node_paths=PackedStringArray("player", "weapon_container", "bullet_raycast")]
+script = ExtResource("13_4oicu")
+player = NodePath("..")
+weapon_container = NodePath("../CameraController/Camera3D/WeaponContainer")
+bullet_raycast = NodePath("../CameraController/Camera3D/WeaponContainer/BulletRayCast3D")
+
+[node name="Timer" type="Timer" parent="WeaponManager"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_a4ge6")
+}

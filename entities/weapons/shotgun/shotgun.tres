@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=3 format=3 uid="uid://owrb7xt82e0e"]
+
+[ext_resource type="Script" path="res://entities/weapons/weapon_resource.gd" id="1_5gssy"]
+[ext_resource type="PackedScene" uid="uid://f3bl63mboiak" path="res://entities/weapons/shotgun/shotgun.tscn" id="1_wpxux"]
+
+[resource]
+script = ExtResource("1_5gssy")
+name = &"Shotgun"
+position = Vector3(0.55, -0.333, -0.75)
+rotation = Vector3(0, 0, 0)
+collision_size = Vector3(0.08, 0.2, 0.6)
+collision_position = Vector3(0, -0.0181422, 0.014604)
+collision_rotation = Vector3(0, 0, 0)
+model = ExtResource("1_wpxux")
+damage_per_shot = 10.0
+ammo_per_magazine = 2
+magazine_count = 3
+gunshot_duration = 0.0
+is_automatic = false
+bullets_per_shot = 8
+spread = 15.0

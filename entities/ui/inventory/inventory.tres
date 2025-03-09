@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Inventory" load_steps=5 format=3 uid="uid://crmn2vcsexv1n"]
+
+[ext_resource type="Script" path="res://entities/items/item.gd" id="1_25oob"]
+[ext_resource type="Resource" uid="uid://x3bu6tx8v06r" path="res://entities/items/armour/heavy_shield.tres" id="2_ak60f"]
+[ext_resource type="Resource" uid="uid://bi2iit3t83bd2" path="res://entities/items/armour/light_shield.tres" id="3_7dgqa"]
+[ext_resource type="Script" path="res://entities/ui/inventory/inventory.gd" id="4_0hhyk"]
+
+
+[resource]
+script = ExtResource("4_0hhyk")
+items = Array[ExtResource("1_25oob")]([ExtResource("2_ak60f"), ExtResource("3_7dgqa"), null, null, null])
