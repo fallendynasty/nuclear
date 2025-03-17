@@ -17,9 +17,14 @@ var ammo_per_magazine: int
 ## the amount of ammo unused (excluding the ammo in the current magazine)
 var ammo_remaining: int
 
+## variables relating to attacking and reloading and their timers
+var gun_attack_timer: Timer
+var gunshot_duration_ms: float
+var is_automatic: bool
+var reload_duration_ms: float
+
 func _ready() -> void:
 	assert(weapon_resource != null, "weapon_resource is null. Preload the resource instead")
-
 	weapon_name = weapon_resource.name
 	collision_shape.position = weapon_resource.collision_position
 	collision_shape.rotation = weapon_resource.collision_rotation
@@ -29,9 +34,11 @@ func _ready() -> void:
 	ammo_per_magazine = weapon_resource.ammo_per_magazine
 	ammo_count = ammo_per_magazine
 	ammo_remaining = (ammo_per_magazine * weapon_resource.magazine_count) - ammo_count
-	# ... TODO more values from resource ...
-	# mass = ...
-	# ...
+	
+	gunshot_duration_ms = weapon_resource.gunshot_duration_ms
+	print(gunshot_duration_ms, weapon_resource.gunshot_duration_ms, weapon_name)
+	is_automatic = weapon_resource.is_automatic
+	reload_duration_ms = weapon_resource.reload_duration_ms
 	
 	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	label.position = collision_shape.position
@@ -54,7 +61,14 @@ func _on_pickup() -> void:
 	reset_translation()
 	label.text = ""
 	set_freeze_enabled(true)
-
+	
+	gun_attack_timer = Timer.new()  # Create a new Timer instance
+	print(gunshot_duration_ms)
+	gun_attack_timer.wait_time = gunshot_duration_ms/1000  # Set the delay
+	gun_attack_timer.one_shot = true # runs once every time it's started and stops
+	gun_attack_timer.autostart = true # initial gun delay
+	add_child(gun_attack_timer)  # Attach it to the gun node
+	
 func _on_drop(force: Vector3) -> void:
 	is_equipped = false
 	set_freeze_enabled(false)
@@ -66,6 +80,7 @@ func _on_collision(body: Node3D) -> void:
 
 func _on_attack(origin: Vector3, look_direction: Vector3, hitscan_distance: float = 1000) -> void:
 	# check if enough ammo
+	gun_attack_timer.start()
 	if ammo_count <= 0:
 		print("[WeaponModel %s] I NEED MORE BOOLETS" % self.weapon_name)
 		return

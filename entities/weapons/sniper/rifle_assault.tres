@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=3 format=3 uid="uid://jl6hipaygagy"]
+
+[ext_resource type="PackedScene" uid="uid://cad662bmia03c" path="res://entities/weapons/sniper/rifle_assault.tscn" id="1_g06tq"]
+[ext_resource type="Script" path="res://entities/weapons/weapon_resource.gd" id="1_x0vhx"]
+
+[resource]
+script = ExtResource("1_x0vhx")
+name = &"assault rifle"
+position = Vector3(0.55, -0.333, -0.75)
+rotation = Vector3(0, 0, 0)
+collision_size = Vector3(0.160059, 0.262413, 0.767552)
+collision_position = Vector3(-0.003, -0.039, 0.01)
+collision_rotation = Vector3(0, 0, 0)
+model = ExtResource("1_g06tq")
+damage_per_shot = 30.0
+ammo_per_magazine = 50
+magazine_count = 3
+gunshot_duration_ms = 100.0
+is_automatic = true
+reload_duration_ms = 1000.0
+bullets_per_shot = 1
+spread = 0.0

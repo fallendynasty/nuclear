@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://5nwe6bxvb1ak"]
+[gd_scene load_steps=18 format=3 uid="uid://5nwe6bxvb1ak"]
 
 [ext_resource type="Texture2D" uid="uid://bto6mfjkcw8ky" path="res://assets/textures/prototyping/dark/dark_texture4_text.png" id="1_n31nt"]
 [ext_resource type="PackedScene" uid="uid://bpj8ln6w4yv72" path="res://entities/player/player.tscn" id="2_8q5n0"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://qmyw62h2ql3b" path="res://entities/dummy_target/dummy_target.tscn" id="7_eke45"]
 [ext_resource type="PackedScene" uid="uid://cydqomi6hfvqr" path="res://entities/weapons/weapon_model.tscn" id="8_mhttq"]
 [ext_resource type="Resource" uid="uid://owrb7xt82e0e" path="res://entities/weapons/shotgun/shotgun.tres" id="9_gmkjt"]
+[ext_resource type="Resource" uid="uid://jl6hipaygagy" path="res://entities/weapons/sniper/rifle_assault.tres" id="10_sr6tv"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_p6ibe"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -78,7 +79,7 @@ radius = 1.30207
 radial_segments = 24
 
 [node name="floor" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.78724, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00862026, -5.78778, 0.0051403)
 use_collision = true
 size = Vector3(1000, 11.3115, 1000)
 material = SubResource("StandardMaterial3D_0rfyi")
@@ -153,7 +154,12 @@ material = SubResource("StandardMaterial3D_f1mva")
 [node name="DummyTarget" parent="." instance=ExtResource("7_eke45")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.944851, 1, -19.939)
 
-[node name="WeaponModel" parent="." node_paths=PackedStringArray("player") instance=ExtResource("8_mhttq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.92402, 1.59592, -29.4497)
+[node name="shotgun" parent="." node_paths=PackedStringArray("player") instance=ExtResource("8_mhttq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.94369, 11.7737, -29.5018)
 weapon_resource = ExtResource("9_gmkjt")
+player = NodePath("../Player")
+
+[node name="assault rifle" parent="." node_paths=PackedStringArray("player") instance=ExtResource("8_mhttq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.16765, 7.78124, -30.2404)
+weapon_resource = ExtResource("10_sr6tv")
 player = NodePath("../Player")

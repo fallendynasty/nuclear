@@ -39,6 +39,14 @@ func _ready() -> void:
 	swapped.connect(player.hud_ui.update_ammo_label)
 	swap_to(0)
 
+func _process(delta: float) -> void:
+	# handle attacking
+	if Input.is_action_pressed(player.INPUT_ATTACK) and get_current_weapon_model().gun_attack_timer.is_stopped():
+		if get_current_weapon_model().is_automatic:
+			attack()
+		elif Input.is_action_just_pressed(player.INPUT_ATTACK):
+			attack()
+			
 func attack() -> void:
 	var weapon := get_current_weapon_model()
 	if weapon == null:
@@ -62,7 +70,7 @@ func reload() -> void:
 		return
 	
 	weapon._on_reload()
-	# ...
+	await get_tree().create_timer(weapon.reload_duration_ms / 1000.0).timeout
 	reloaded.emit(get_current_weapon_model())
 
 ## drop current weapon
@@ -154,8 +162,6 @@ func scan_for_new_weapons() -> void:
 			print("unable to equip ", new_weapon_model, " (weapon slots full)")
 
 func _input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed(player.INPUT_ATTACK) and not (event is InputEventMouseMotion):
-		attack()
 	if Input.is_action_just_pressed(player.INPUT_RELOAD):
 		reload()
 	scan_for_new_weapons()
