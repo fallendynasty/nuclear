@@ -154,7 +154,7 @@ func scan_for_new_weapons() -> void:
 			print("unable to equip ", new_weapon_model, " (weapon slots full)")
 
 func _input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed(player.INPUT_ATTACK):
+	if Input.is_action_just_pressed(player.INPUT_ATTACK) and not (event is InputEventMouseMotion):
 		attack()
 	if Input.is_action_just_pressed(player.INPUT_RELOAD):
 		reload()
