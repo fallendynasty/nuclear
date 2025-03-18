@@ -1,6 +1,13 @@
+@tool
 class_name WeaponModel extends RigidBody3D
 
-@export var weapon_resource: WeaponResource
+@export var weapon_resource: WeaponResource :
+	set(value):
+		if weapon_resource != null:
+			weapon_resource.changed.disconnect(_load_weapon_resource)
+		weapon_resource = value
+		# _load_weapon_resource()
+		weapon_resource.changed.connect(_load_weapon_resource)
 @export var label: Label3D
 @export var collision_shape: CollisionShape3D
 @export var player: Player
@@ -23,8 +30,8 @@ var gunshot_duration_ms: float
 var is_automatic: bool
 var reload_duration_ms: float
 
-func _ready() -> void:
-	assert(weapon_resource != null, "weapon_resource is null. Preload the resource instead")
+func _load_weapon_resource():
+	print("_load_weapon_resource() called")
 	weapon_name = weapon_resource.name
 	collision_shape.position = weapon_resource.collision_position
 	collision_shape.rotation = weapon_resource.collision_rotation
@@ -39,17 +46,35 @@ func _ready() -> void:
 	print(gunshot_duration_ms, weapon_resource.gunshot_duration_ms, weapon_name)
 	is_automatic = weapon_resource.is_automatic
 	reload_duration_ms = weapon_resource.reload_duration_ms
-	
-	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+
 	label.position = collision_shape.position
 	label.position.y += 0.1 + collision_shape.shape.size.y / 2
-	add_collision_exception_with(player)
+
+	var weapon_instance := weapon_resource.model.instantiate()
+
+	if Engine.is_editor_hint():
+		# note: `node.name` not to be confused with `weapon_resource.weapon_name`
+		var existing_child := find_child(weapon_instance.name)
+		if existing_child:
+			remove_child(existing_child)
+			# existing_child.queue_free()
+
+	add_child(weapon_instance)
+	print("added weapon_instance ", weapon_instance.name)
+
+	print("player, player.is_ancestor_of(self): ", player, player.is_ancestor_of(self))
+	if Engine.is_editor_hint() and player and player.is_ancestor_of(self):
+		reset_translation()
+
+func _ready() -> void:
+	assert(weapon_resource != null, "weapon_resource is null. Preload the resource instead")
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+
 	contact_monitor = true
 	max_contacts_reported = 1
-	
-	var weapon_instance = weapon_resource.model.instantiate()
-	add_child(weapon_instance)
-	
+
+	_load_weapon_resource()
+	add_collision_exception_with(player)
 	body_entered.connect(_on_collision)
 
 func reset_translation() -> void:

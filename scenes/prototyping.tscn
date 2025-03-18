@@ -155,11 +155,15 @@ material = SubResource("StandardMaterial3D_f1mva")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.944851, 1, -19.939)
 
 [node name="shotgun" parent="." node_paths=PackedStringArray("player") instance=ExtResource("8_mhttq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.94369, 11.7737, -29.5018)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.680579, 1.47882, -24.2131)
+contact_monitor = true
+max_contacts_reported = 1
 weapon_resource = ExtResource("9_gmkjt")
 player = NodePath("../Player")
 
 [node name="assault rifle" parent="." node_paths=PackedStringArray("player") instance=ExtResource("8_mhttq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.16765, 7.78124, -30.2404)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.67266, 1.60572, -24.7106)
+contact_monitor = true
+max_contacts_reported = 1
 weapon_resource = ExtResource("10_sr6tv")
 player = NodePath("../Player")
