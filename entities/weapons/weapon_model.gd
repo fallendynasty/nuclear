@@ -10,7 +10,7 @@ class_name WeaponModel extends RigidBody3D
 		weapon_resource = value
 		if weapon_resource != null:  # added a new weapon resource
 			weapon_resource.changed.connect(_load_weapon_resource)
-			weapon_resource.changed.emit()
+			_load_weapon_resource()
 		else:  # deleted the weapon resource
 			if _weapon_instance != null:
 				remove_child(_weapon_instance)
