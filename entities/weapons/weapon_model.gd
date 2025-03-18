@@ -3,14 +3,23 @@ class_name WeaponModel extends RigidBody3D
 
 @export var weapon_resource: WeaponResource :
 	set(value):
+		# disconnect the previous resource signals
 		if weapon_resource != null:
 			weapon_resource.changed.disconnect(_load_weapon_resource)
+		# connect the new resource signals
 		weapon_resource = value
-		# _load_weapon_resource()
-		weapon_resource.changed.connect(_load_weapon_resource)
+		if weapon_resource != null:  # added a new weapon resource
+			weapon_resource.changed.connect(_load_weapon_resource)
+			weapon_resource.changed.emit()
+		else:  # deleted the weapon resource
+			if _weapon_instance != null:
+				remove_child(_weapon_instance)
+				_weapon_instance.queue_free()
 @export var label: Label3D
 @export var collision_shape: CollisionShape3D
 @export var player: Player
+
+var _weapon_instance: Node = null
 
 var is_equipped: bool = false
 
@@ -50,19 +59,19 @@ func _load_weapon_resource():
 	label.position = collision_shape.position
 	label.position.y += 0.1 + collision_shape.shape.size.y / 2
 
-	var weapon_instance := weapon_resource.model.instantiate()
-
-	if Engine.is_editor_hint():
+	# delete existing weapon instance on resource update
+	if Engine.is_editor_hint() and _weapon_instance != null:
 		# note: `node.name` not to be confused with `weapon_resource.weapon_name`
-		var existing_child := find_child(weapon_instance.name)
-		if existing_child:
-			remove_child(existing_child)
-			# existing_child.queue_free()
+		remove_child(_weapon_instance)
+		_weapon_instance.queue_free()
+	# add the new weapon instance from the updated resource
+	_weapon_instance = weapon_resource.model.instantiate()
 
-	add_child(weapon_instance)
-	print("added weapon_instance ", weapon_instance.name)
+	add_child(_weapon_instance)
+	print("added _weapon_instance ", _weapon_instance.name)
 
-	print("player, player.is_ancestor_of(self): ", player, player.is_ancestor_of(self))
+	# allow changing of position relative to player if the weapon is
+	# attached to the player('s WeaponContainer)
 	if Engine.is_editor_hint() and player and player.is_ancestor_of(self):
 		reset_translation()
 
