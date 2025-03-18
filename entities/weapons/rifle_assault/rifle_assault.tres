@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="WeaponResource" load_steps=3 format=3 uid="uid://jl6hipaygagy"]
 
-[ext_resource type="PackedScene" uid="uid://cad662bmia03c" path="res://entities/weapons/sniper/rifle_assault.tscn" id="1_g06tq"]
+[ext_resource type="PackedScene" uid="uid://cad662bmia03c" path="res://entities/weapons/rifle_assault/rifle_assault.tscn" id="1_g06tq"]
 [ext_resource type="Script" path="res://entities/weapons/weapon_resource.gd" id="1_x0vhx"]
 
 [resource]
@@ -20,3 +20,8 @@ is_automatic = true
 reload_duration_ms = 1000.0
 bullets_per_shot = 1
 spread = 0.0
+is_ads_enabled = true
+ads_zoom_multiplier = 1.5
+_tool_show_ads_translation = false
+ads_position = Vector3(0, -0.145, -0.26)
+is_ads_toggle_on = false

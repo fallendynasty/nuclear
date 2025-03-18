@@ -22,6 +22,7 @@ class_name WeaponModel extends RigidBody3D
 var _weapon_instance: Node = null
 
 var is_equipped: bool = false
+var is_ads_in: bool = false
 
 var weapon_name: StringName
 var damage_per_bullet: float
@@ -73,7 +74,10 @@ func _load_weapon_resource():
 	# allow changing of position relative to player if the weapon is
 	# attached to the player('s WeaponContainer)
 	if Engine.is_editor_hint() and player and player.is_ancestor_of(self):
-		reset_translation()
+		if weapon_resource._tool_show_ads_translation:
+			_tool_show_ads_translation()
+		else:
+			reset_translation()
 
 func _ready() -> void:
 	assert(weapon_resource != null, "weapon_resource is null. Preload the resource instead")
@@ -85,6 +89,10 @@ func _ready() -> void:
 	_load_weapon_resource()
 	add_collision_exception_with(player)
 	body_entered.connect(_on_collision)
+
+func _tool_show_ads_translation() -> void:
+	position = weapon_resource.ads_position
+	rotation = weapon_resource.ads_rotation
 
 func reset_translation() -> void:
 	position = weapon_resource.position
@@ -182,3 +190,39 @@ func _on_reload() -> void:
 	ammo_count += diff
 	ammo_remaining -= diff
 	# TODO ...
+
+## transition from hip fire to aim down sights
+func _on_ads_in() -> void:
+	if not weapon_resource.is_ads_enabled:
+		return
+	position = lerp(position, weapon_resource.ads_position, 1.0)
+	if player == null or player.CAMERA_CONTROLLER == null:
+		return
+	var camera_fov := player.CAMERA_CONTROLLER.fov
+	player.CAMERA_CONTROLLER.fov = lerp(
+		camera_fov,
+		camera_fov / weapon_resource.ads_zoom_multiplier,
+		1.0
+	)
+	is_ads_in = true
+
+## transition from aim down sights to hip fire
+func _on_ads_out() -> void:
+	if not weapon_resource.is_ads_enabled:
+		return
+	position = lerp(position, weapon_resource.position, 1.0)
+	if player == null or player.CAMERA_CONTROLLER == null:
+		return
+	var camera_fov := player.CAMERA_CONTROLLER.fov
+	player.CAMERA_CONTROLLER.fov = lerp(
+		camera_fov,
+		camera_fov * weapon_resource.ads_zoom_multiplier,
+		1.0
+	)
+	is_ads_in = false
+
+func toggle_ads() -> void:
+	if is_ads_in:
+		_on_ads_out()
+	else:
+		_on_ads_in()

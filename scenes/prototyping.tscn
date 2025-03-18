@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://qmyw62h2ql3b" path="res://entities/dummy_target/dummy_target.tscn" id="7_eke45"]
 [ext_resource type="PackedScene" uid="uid://cydqomi6hfvqr" path="res://entities/weapons/weapon_model.tscn" id="8_mhttq"]
 [ext_resource type="Resource" uid="uid://owrb7xt82e0e" path="res://entities/weapons/shotgun/shotgun.tres" id="9_gmkjt"]
-[ext_resource type="Resource" uid="uid://jl6hipaygagy" path="res://entities/weapons/sniper/rifle_assault.tres" id="10_sr6tv"]
+[ext_resource type="Resource" uid="uid://jl6hipaygagy" path="res://entities/weapons/rifle_assault/rifle_assault.tres" id="10_hjigi"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_p6ibe"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -165,5 +165,5 @@ player = NodePath("../Player")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.67266, 1.60572, -24.7106)
 contact_monitor = true
 max_contacts_reported = 1
-weapon_resource = ExtResource("10_sr6tv")
+weapon_resource = ExtResource("10_hjigi")
 player = NodePath("../Player")

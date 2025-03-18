@@ -34,6 +34,7 @@ class_name Player extends CharacterBody3D
 @export var INPUT_SPRINT: String = "sprint"
 @export var INPUT_SLIDE: String = "slide"
 @export var INPUT_ATTACK: String = "attack"
+@export var INPUT_ADS: String = "aim_down_sights"
 @export var INPUT_RELOAD: String = "reload"
 @export var INPUT_INTERACT: String = "interact"
 @export var INPUT_INVENTORY: String = "open_inventory"

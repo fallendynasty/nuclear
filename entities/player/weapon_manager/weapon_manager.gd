@@ -122,6 +122,20 @@ func swap_to(idx: int) -> void:
 		empty_slot_idx = idx
 	swapped.emit(current_weapon)
 
+## transition from hip fire to aim down sights
+func ads_in() -> void:
+	var current_weapon := get_current_weapon_model()
+	if current_weapon == null:
+		return
+	current_weapon._on_ads_in()
+
+## transition from aim down sights to hip fire
+func ads_out() -> void:
+	var current_weapon := get_current_weapon_model()
+	if current_weapon == null:
+		return
+	current_weapon._on_ads_out()
+
 var __prev_weapon_found: WeaponModel = null
 
 func scan_for_new_weapons() -> void:
@@ -153,7 +167,7 @@ func scan_for_new_weapons() -> void:
 		else:
 			print("unable to equip ", new_weapon_model, " (weapon slots full)")
 
-func _process_attack_input():
+func _process_attack_input() -> void:
 	var current_weapon: WeaponModel = get_current_weapon_model()
 	if current_weapon == null:
 		return
@@ -170,6 +184,18 @@ func _process_attack_input():
 		if Input.is_action_just_pressed(player.INPUT_ATTACK):
 			attack()
 
+func _process_ads_input() -> void:
+	var current_weapon = get_current_weapon_model()
+	if current_weapon == null:
+		return
+
+	if current_weapon.weapon_resource.is_ads_toggle_on:
+		if Input.is_action_just_pressed(player.INPUT_ADS):
+			current_weapon.toggle_ads()
+	else:
+		if Input.is_action_just_pressed(player.INPUT_ADS) or Input.is_action_just_released(player.INPUT_ADS):
+			current_weapon.toggle_ads()
+
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed(player.INPUT_RELOAD):
 		reload()
@@ -184,3 +210,4 @@ func _input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	_process_attack_input()
+	_process_ads_input()
