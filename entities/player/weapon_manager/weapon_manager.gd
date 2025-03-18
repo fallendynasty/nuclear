@@ -39,14 +39,6 @@ func _ready() -> void:
 	swapped.connect(player.hud_ui.update_ammo_label)
 	swap_to(0)
 
-func _process(delta: float) -> void:
-	# handle attacking
-	if Input.is_action_pressed(player.INPUT_ATTACK) and get_current_weapon_model().gun_attack_timer.is_stopped():
-		if get_current_weapon_model().is_automatic:
-			attack()
-		elif Input.is_action_just_pressed(player.INPUT_ATTACK):
-			attack()
-			
 func attack() -> void:
 	var weapon := get_current_weapon_model()
 	if weapon == null:
@@ -161,6 +153,23 @@ func scan_for_new_weapons() -> void:
 		else:
 			print("unable to equip ", new_weapon_model, " (weapon slots full)")
 
+func _process_attack_input():
+	var current_weapon: WeaponModel = get_current_weapon_model()
+	if current_weapon == null:
+		return
+
+	# add delay between each shot/attack	
+	if not get_current_weapon_model().gun_attack_timer.is_stopped():
+		return
+
+	# handle attacking
+	if get_current_weapon_model().is_automatic:
+		if Input.is_action_pressed(player.INPUT_ATTACK):
+			attack()
+	else:
+		if Input.is_action_just_pressed(player.INPUT_ATTACK):
+			attack()
+
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed(player.INPUT_RELOAD):
 		reload()
@@ -172,3 +181,6 @@ func _input(event: InputEvent) -> void:
 	elif Input.is_action_just_pressed("weapon_2"):
 		swap_to(1)
 	prints(weapon_models, current_weapon_idx, empty_slot_idx)
+
+func _process(delta: float) -> void:
+	_process_attack_input()
