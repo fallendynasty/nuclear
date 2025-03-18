@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://2mwbnfbbmbex"
-path="res://.godot/imported/Rifle_Assault_West.glb-3840b150a3d431c4beeb0de69b54a992.scn"
+path="res://.godot/imported/Rifle_Assault_West.glb-1e11f312904fe6ee130610b08396be2d.scn"
 
 [deps]
 
-source_file="res://entities/weapons/sniper/Rifle_Assault_West.glb"
-dest_files=["res://.godot/imported/Rifle_Assault_West.glb-3840b150a3d431c4beeb0de69b54a992.scn"]
+source_file="res://entities/weapons/rifle_assault/Rifle_Assault_West.glb"
+dest_files=["res://.godot/imported/Rifle_Assault_West.glb-1e11f312904fe6ee130610b08396be2d.scn"]
 
 [params]
 
