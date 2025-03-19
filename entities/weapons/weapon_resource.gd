@@ -58,7 +58,6 @@ class_name WeaponResource extends Resource
 	set(value):
 		ads_position = value
 		changed.emit()
-# TODO add transition speed, lerp in weapon_model, weapon_manager, etc.
-# @export var ads_transition_speed: float = 1.0
+@export var ads_transition_speed: float = 20.0
 ## `true` - press once to toggle ADS; `false` - hold button to ADS
 @export var is_ads_toggle_on: bool = false

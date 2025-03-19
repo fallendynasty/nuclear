@@ -190,39 +190,3 @@ func _on_reload() -> void:
 	ammo_count += diff
 	ammo_remaining -= diff
 	# TODO ...
-
-## transition from hip fire to aim down sights
-func _on_ads_in() -> void:
-	if not weapon_resource.is_ads_enabled:
-		return
-	position = lerp(position, weapon_resource.ads_position, 1.0)
-	if player == null or player.CAMERA_CONTROLLER == null:
-		return
-	var camera_fov := player.CAMERA_CONTROLLER.fov
-	player.CAMERA_CONTROLLER.fov = lerp(
-		camera_fov,
-		camera_fov / weapon_resource.ads_zoom_multiplier,
-		1.0
-	)
-	is_ads_in = true
-
-## transition from aim down sights to hip fire
-func _on_ads_out() -> void:
-	if not weapon_resource.is_ads_enabled:
-		return
-	position = lerp(position, weapon_resource.position, 1.0)
-	if player == null or player.CAMERA_CONTROLLER == null:
-		return
-	var camera_fov := player.CAMERA_CONTROLLER.fov
-	player.CAMERA_CONTROLLER.fov = lerp(
-		camera_fov,
-		camera_fov * weapon_resource.ads_zoom_multiplier,
-		1.0
-	)
-	is_ads_in = false
-
-func toggle_ads() -> void:
-	if is_ads_in:
-		_on_ads_out()
-	else:
-		_on_ads_in()

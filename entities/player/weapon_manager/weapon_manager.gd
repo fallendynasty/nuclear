@@ -79,6 +79,7 @@ func drop() -> void:
 	weapon.reparent(player.get_parent())
 	weapon._on_drop(-player.basis.z * THROW_FORCE + player.velocity)
 	weapon_models[current_weapon_idx] = null
+	player.equip_item_range_raycast.remove_exception(weapon)
 	empty_slot_idx = find_new_empty_slot()
 	dropped.emit(null)
 
@@ -98,6 +99,7 @@ func pickup(new_weapon: WeaponModel) -> int:
 	weapon_models[empty_slot_idx] = new_weapon
 	var idx = empty_slot_idx
 	empty_slot_idx = find_new_empty_slot()
+	player.equip_item_range_raycast.add_exception(new_weapon)
 	prints("pickup done: ", weapon_models, current_weapon_idx, empty_slot_idx)
 	picked_up.emit(new_weapon)
 	return idx
@@ -184,17 +186,39 @@ func _process_attack_input() -> void:
 		if Input.is_action_just_pressed(player.INPUT_ATTACK):
 			attack()
 
-func _process_ads_input() -> void:
+var _is_ads_toggled = false
+func _process_ads_input(delta: float) -> void:
 	var current_weapon = get_current_weapon_model()
 	if current_weapon == null:
 		return
 
+	if not current_weapon.weapon_resource.is_ads_enabled:
+		return
+
 	if current_weapon.weapon_resource.is_ads_toggle_on:
 		if Input.is_action_just_pressed(player.INPUT_ADS):
-			current_weapon.toggle_ads()
+			_is_ads_toggled = !_is_ads_toggled
+
+	if Input.is_action_pressed(player.INPUT_ADS) or _is_ads_toggled:
+		current_weapon.position = current_weapon.position.lerp(
+			current_weapon.weapon_resource.ads_position,
+			current_weapon.weapon_resource.ads_transition_speed * delta
+		)
+		player.CAMERA_CONTROLLER.fov = lerp(
+			player.CAMERA_CONTROLLER.fov,
+			player.initial_camera_fov / current_weapon.weapon_resource.ads_zoom_multiplier,
+			current_weapon.weapon_resource.ads_transition_speed * delta
+		)
 	else:
-		if Input.is_action_just_pressed(player.INPUT_ADS) or Input.is_action_just_released(player.INPUT_ADS):
-			current_weapon.toggle_ads()
+		current_weapon.position = current_weapon.position.lerp(
+			current_weapon.weapon_resource.position,
+			current_weapon.weapon_resource.ads_transition_speed * delta
+		)
+		player.CAMERA_CONTROLLER.fov = lerp(
+			player.CAMERA_CONTROLLER.fov,
+			player.initial_camera_fov,
+			current_weapon.weapon_resource.ads_transition_speed * delta
+		)
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed(player.INPUT_RELOAD):
@@ -210,4 +234,4 @@ func _input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	_process_attack_input()
-	_process_ads_input()
+	_process_ads_input(delta)

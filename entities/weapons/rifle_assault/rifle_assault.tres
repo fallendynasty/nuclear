@@ -24,4 +24,5 @@ is_ads_enabled = true
 ads_zoom_multiplier = 1.5
 _tool_show_ads_translation = false
 ads_position = Vector3(0, -0.145, -0.26)
-is_ads_toggle_on = false
+ads_transition_speed = null
+is_ads_toggle_on = true

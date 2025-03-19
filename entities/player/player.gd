@@ -24,6 +24,7 @@ class_name Player extends CharacterBody3D
 @export var CAMERA_CONTROLLER: Camera3D
 @export var healthbar: ProgressBar  # $CameraController/Camera3D/HealthBar
 @export var equip_item_range_raycast: RayCast3D
+@onready var initial_camera_fov: float = CAMERA_CONTROLLER.fov
 
 @export_group("Player Inputs")
 @export var INPUT_LEFT: String = "left"
