@@ -4,7 +4,6 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sangt"]
 resource_local_to_scene = true
-size = Vector3(0.160059, 0.262413, 0.767552)
 
 [node name="WeaponModel" type="RigidBody3D" node_paths=PackedStringArray("label", "collision_shape")]
 script = ExtResource("1_nwg8a")

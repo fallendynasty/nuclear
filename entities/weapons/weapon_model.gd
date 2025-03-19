@@ -92,7 +92,6 @@ func _ready() -> void:
 
 func _tool_show_ads_translation() -> void:
 	position = weapon_resource.ads_position
-	rotation = weapon_resource.ads_rotation
 
 func reset_translation() -> void:
 	position = weapon_resource.position
@@ -156,7 +155,7 @@ func _on_attack(origin: Vector3, look_direction: Vector3, hitscan_distance: floa
 			continue
 
 		var collider: Node3D = result.get("collider")
-		var position: Vector3 = result.get("position")
+		var collider_position: Vector3 = result.get("position")
 		assert(collider != null and position != null)
 
 		bullet_tracer.target_position = position

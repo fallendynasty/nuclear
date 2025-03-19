@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://5nwe6bxvb1ak"]
+[gd_scene load_steps=19 format=3 uid="uid://5nwe6bxvb1ak"]
 
 [ext_resource type="Texture2D" uid="uid://bto6mfjkcw8ky" path="res://assets/textures/prototyping/dark/dark_texture4_text.png" id="1_n31nt"]
 [ext_resource type="PackedScene" uid="uid://bpj8ln6w4yv72" path="res://entities/player/player.tscn" id="2_8q5n0"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://brswkefqvnfay" path="res://assets/textures/prototyping/dark/dark_texture7_text.png" id="6_skudf"]
 [ext_resource type="PackedScene" uid="uid://qmyw62h2ql3b" path="res://entities/dummy_target/dummy_target.tscn" id="7_eke45"]
 [ext_resource type="PackedScene" uid="uid://cydqomi6hfvqr" path="res://entities/weapons/weapon_model.tscn" id="8_mhttq"]
+[ext_resource type="Resource" uid="uid://b4lwa6ix4cuiy" path="res://entities/weapons/pistol/pistol.tres" id="9_gjarf"]
 [ext_resource type="Resource" uid="uid://owrb7xt82e0e" path="res://entities/weapons/shotgun/shotgun.tres" id="9_gmkjt"]
 [ext_resource type="Resource" uid="uid://jl6hipaygagy" path="res://entities/weapons/rifle_assault/rifle_assault.tres" id="10_hjigi"]
 
@@ -154,10 +155,13 @@ material = SubResource("StandardMaterial3D_f1mva")
 [node name="DummyTarget" parent="." instance=ExtResource("7_eke45")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.944851, 1, -19.939)
 
+[node name="pistol2" parent="." node_paths=PackedStringArray("player") instance=ExtResource("8_mhttq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.162875, 1.07611, -24.5768)
+weapon_resource = ExtResource("9_gjarf")
+player = NodePath("../Player")
+
 [node name="shotgun" parent="." node_paths=PackedStringArray("player") instance=ExtResource("8_mhttq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.680579, 1.47882, -24.2131)
-contact_monitor = true
-max_contacts_reported = 1
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.304499, 0.948985, -24.5639)
 weapon_resource = ExtResource("9_gmkjt")
 player = NodePath("../Player")
 
